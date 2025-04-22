@@ -16,11 +16,11 @@
 
 ### --------------------------------------------------------
 # 🧾 Prisma Kya Hota Hai?
-- Prisma ak ORM (Object Relational Mapping) tool hai jo backend developer use karte hai to word easily with database.
+- Prisma ak ORM (Object Relational Mapping) tool hai jo backend developer use karte hai to work easily with database.
 
 - 👉 ORM :
 - ORM (Object Realtional Mapping) - iska matlab hai ki tum apne database ke tables ko javaScript/TypeScript ke objects ke roop mein treat karte ho.
-- Bina ORM : we write wuery manually :
+- Bina ORM : we write query manually :
 - SELECT * FROM users WHERE id = 1;
 - With ORM : we create only object of that query :
 - const user = await prisma.user.findUnique({   where: { id: 1 }    });
@@ -190,5 +190,3 @@
 - Data safety aur consistency important ho
 - Complex querying karni ho
 - Agar aap Node.js, Express, Prisma, Docker ke saath kaam kar rahe ho — to PostgreSQL is one of the best choices.
-
--> 1:19:00
