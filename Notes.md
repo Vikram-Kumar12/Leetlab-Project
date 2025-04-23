@@ -191,4 +191,25 @@
 - Complex querying karni ho
 - Agar aap Node.js, Express, Prisma, Docker ke saath kaam kar rahe ho — to PostgreSQL is one of the best choices.
 
+### -------------------------------------------------------------------
+# Git-GitHub Important things :
+- **git diff** -> se hame pta chalta hai ki kya kya changes huve hai us file ke andr
+- **git blame** fileName -> se ham ye pta karte hai kis user ne, kis time mein, kon si line ko uodate kiya hai.
+- ak hi bar sara commit na karo, kuchh kaam karo then phir commit karo, phir kuchh kaam karo or commit karo
+- **git commit**
+-  **git reset** --hard commitid : to revert leastest commit
+- **git revert** commitid : ye code basically, karta hai ki, es commit par kuchh add hua hai to remove karo, kuchh remove hua hai to add karo
+- **git branch <branchname>** -> create a branch
+- **git checkout <branchname>** -> to swtich one branch to another branch
+- **git log** --oneline -> show all commits and HEAD
+- **git branch** -> to show all branch 
+- **git push** -> karenge tab error aayega bhai, tera local mein to 'Third Day' branch ban gya hai lekin , remote mein nhi tab ye karenge
+- **git push** --set-upstream origin Third-Day -> ye remote mein branch banayega then push kar dega
+- ab ham main ke andr sab merge kar deta hai cli command ke help se :
+- git checkout main
+- git merge origin/Third-Day
+
+- ***url*** : https://app.eraser.io/workspace/P96VaUsW5o0FXVOTDzHY
+- ***url*** : https://education.github.com/git-cheat-sheet-education.pdf
+
 

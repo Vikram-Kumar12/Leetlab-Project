@@ -62,6 +62,53 @@ const register = asyncHandler(async (req, res) => {
   
 });
 
+const login = asyncHandler(async (req, res) => {
+  const {email,password} = req.body
+  if(!email || !password){
+    return res.status(409).json(
+      new ApiError(409,"Please provide email & password!")
+    )
+  }
+
+  const user = await db.user.findUnique({
+    where:{email}
+  })
+  if(!user){
+    return res.status(401).json(
+      new ApiError(401,"Invalide credentials")
+    )
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password); 
+  if(!isMatch){
+    return res.status(401).json(
+      new ApiError(401,"Invalide credentials")
+    )
+  }
+
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });   // *** jwt secret key generation step : 1. go to terminal then git bash 2. enter openssl rand -hex 32
+
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  });
+
+  res.status(200).json(
+    new ApiResponse(200, "User Login Successfully!", {
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        image: user.image,
+      },
+    })
+  );
+});
 
 
 
@@ -70,7 +117,6 @@ const register = asyncHandler(async (req, res) => {
 
 
 
-const login = asyncHandler(async (req, res) => {});
 const logout = asyncHandler(async (req, res) => {});
 const profile = asyncHandler(async (req, res) => {});
 
