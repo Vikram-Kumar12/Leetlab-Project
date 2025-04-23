@@ -7,6 +7,7 @@ import {
   logout,
   profile,
 } from "../controllers/auth.controllers.js";
+import { authMiddleware } from "../middlewares/auth.middlewares.js";
 
 const authRoutes = express.Router();
 
@@ -14,7 +15,8 @@ authRoutes.post("/register", userRegistrationValidator(), validate, register);
 
 authRoutes.post("/login", userLoginValidator(), validate, login);
 
-authRoutes.post("/logout",logout);
-authRoutes.get("profile",profile);
+authRoutes.post("/logout", authMiddleware, logout);
+
+authRoutes.get("/profile", authMiddleware, profile);
 
 export default authRoutes;

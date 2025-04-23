@@ -111,13 +111,24 @@ const login = asyncHandler(async (req, res) => {
 });
 
 
+const logout = asyncHandler(async (req, res) => {
+
+  res.clearCookie('jwt',{
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+  })
+  res.status(200).json(
+    new ApiResponse(200, "User Logout Successfully!")
+  )
+
+});
 
 
-
-
-
-
-const logout = asyncHandler(async (req, res) => {});
-const profile = asyncHandler(async (req, res) => {});
+const profile = asyncHandler(async (req, res) => {
+  res.status(200).json(
+    new ApiResponse(200,"User Authentication Successfully!",{user:req.user})
+  )
+});
 
 export { register, login, logout, profile };
