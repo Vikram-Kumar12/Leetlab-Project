@@ -26,14 +26,23 @@ enum Defficulty {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String   @unique
-  image     String?
-  role      UserRole @default(USER)
-  password  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                        String    @id @default(uuid())
+  firstname                 String?
+  lastname                  String?
+  username                  String?   @unique
+  email                     String    @unique
+  image                     String?
+  role                      UserRole  @default(USER)
+  password                  String?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+  isVerified                Boolean   @default(false)
+  verificationToken         String?
+  verificationTokenExpiry   DateTime?
+  resetPasswordToken        String?
+  resetPasswordTokenExpiry  DateTime?
+  changePasswordToken       String?
+  changePasswordTokenExpiry DateTime?
 
   problems Problem[]
 }

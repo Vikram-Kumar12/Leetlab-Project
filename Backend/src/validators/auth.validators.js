@@ -3,10 +3,19 @@ import {body} from "express-validator"
 
 const userRegistrationValidator = () => {
     return [
-        body('name')
+        body('firstname')
         .trim()
-        .notEmpty().withMessage("Username is required")
-        .isLength({min:3}).withMessage("Username should be at least 3 characters"),
+        .notEmpty().withMessage("Firstname is required")
+        .isLength({min:3}).withMessage("Firstname should be at least 3 characters"),
+
+        body('lastname')
+        .trim()
+        .notEmpty().withMessage("lastname is required")
+        .isLength({min:3}).withMessage("lastname should be at least 3 characters"),
+
+        body('role')
+        .trim()
+        .notEmpty().withMessage("role is required"),
 
         body('email')
         .trim()

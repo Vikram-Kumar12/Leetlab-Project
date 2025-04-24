@@ -14,49 +14,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum UserRole {
   ADMIN
   USER
 }
 
-enum Defficulty{
-  ESAY 
+enum Defficulty {
+  ESAY
   MEDIUM
   HARD
 }
 
-model User{
-  id String @id @default(uuid())
-  name String?
-  email String @unique
-  image String?
-  role UserRole @default(USER)
-  password String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id                        String    @id @default(uuid())
+  firstname                 String?
+  lastname                  String?
+  username                  String?   @unique
+  email                     String    @unique
+  image                     String?
+  role                      UserRole  @default(USER)
+  password                  String?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+  isVerified                Boolean   @default(false)
+  verificationToken         String?
+  verificationTokenExpiry   DateTime?
+  resetPasswordToken        String?
+  resetPasswordTokenExpiry  DateTime?
+  changePasswordToken       String?
+  changePasswordTokenExpiry DateTime?
 
   problems Problem[]
 }
 
 model Problem {
-  id String @id @default(uuid())
-  title String
+  id          String     @id @default(uuid())
+  title       String
   description String
-  difficulty Defficulty
-  tags String[]
-  userId String
-  examples Json
+  difficulty  Defficulty
+  tags        String[]
+  userId      String
+  examples    Json
   constraints String
-  hints String?
-  editorial String?
-  
-  testcases Json
-  codeSnippets Json
+  hints       String?
+  editorial   String?
+
+  testcases         Json
+  codeSnippets      Json
   referenceSolution Json
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
