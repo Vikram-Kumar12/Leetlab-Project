@@ -212,4 +212,81 @@
 - ***url*** : https://app.eraser.io/workspace/P96VaUsW5o0FXVOTDzHY
 - ***url*** : https://education.github.com/git-cheat-sheet-education.pdf
 
+### --------------------------------------------------------
+# Important Bat :
+- Jese hi kuchh changes kar rhe ho 'schema.prisma' ke model ke andr to apko ye karna hoga , uske bad :
+- 1. npx prisma generate
+- 2. npx prisma migrate dev
+- 3. Enter name apko jo dena hai
+- 4. npx prisma db push
 
+### -----------------------------------------------------------------
+# 🚀 Setting Up WSL, Docker, and Judge0 on Windows
+
+# Step 1: Install WSL and Ubuntu :
+- 1. wsl -install 
+    - wsl --install → WSL aur Linux (jaise Ubuntu) ko install karta hai ek hi command me.
+- 2.Restart Your Computer :
+    - if, After the installation, you’ll be prompted to restart your computer.
+    - Restart to complete the WSL setup.
+- 3.Complete Ubuntu Setup
+    - Open the Ubuntu terminal from the Start menu.
+    - Follow the prompts to create a UNIX username and password.
+- 4.Update Ubuntu 
+     - command : sudo apt update && sudo apt upgrade -y
+     - System ke packages ko update aur upgrade karta hai automatically (bina pooche)
+- 5.(Optional) Adjust cgroup settings for better Docker compatibility
+
+    - Open the GRUB config file:
+    - command : sudo nano /etc/default/grub
+
+    - Find the line starting with GRUB_CMDLINE_LINUX and change it to:
+    - GRUB_CMDLINE_LINUX="systemd.unified_cgroup_hierarchy=0"
+
+    - Save and exit (Ctrl + O, Enter, Ctrl + X).
+    - Update GRUB and reboot:
+    - command : sudo update-grub
+    - command : sudo reboot
+    - if you don't find it that's okay, don't do anything close the GRUB config file
+
+# Step 2: Install Docker and Docker Compose
+- 1.Install Docker
+    - Open the Ubuntu terminal and run:
+        - command : sudo apt update && sudo apt install -y docker.io
+        - System update karta hai aur Docker software ko bina confirmation ke install karta hai. 🐳
+- 2.Install Docker Compose
+    - Still in the Ubuntu terminal, install Docker Compose:
+        - command : sudo apt install -y docker-compose
+        - 📦 Docker Compose tool ko install karta hai bina confirmation ke.(Ye multi-container Docker apps ko manage karne ke liye use hota hai.) 
+
+# Step 3: Install and Set Up Judge0
+- 1. Download and Extract Judge0
+    - Download the Judge0 release archive:
+        - command : wget https://github.com/judge0/judge0/releases/download/v1.13.1/judge0-v1.13.1.zip
+        - Internet se Judge0 ka zip file (v1.13.1) download karta hai
+
+    - Unzip the downloaded archive:
+        - command : unzip judge0-v1.13.1.zip
+        - 🗂️ Downloaded zip file ko extract (unzip) karta hai current folder me. 
+
+- 2.Set Up Secure Passwords
+    - Generate random passwords for Redis and Postgres:
+        - visit : https://www.random.org/passwords/?num=1&len=32&format=plain&rnd=new and copy the first password.
+
+    - Open the judge0.conf file:
+        - command : nano judge0.conf
+
+    - Update the REDIS_PASSWORD with the generated password.
+    - Repeat the process for POSTGRES_PASSWORD using a new random password.
+    - Save and exit (Ctrl + O, Enter, Ctrl + X).
+
+- 3.Start Judge0 Services
+    - Navigate to the Judge0 folder:
+        - command : cd judge0-v1.13.1
+
+        - Check all package install or not
+        - command : ls
+        - if two things show, means all okay.
+
+    - Start the database and Redis services
+    - next day.
