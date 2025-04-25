@@ -7,8 +7,9 @@ import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { generateTemporaryToken } from "../utils/generateToken.js";
 import { emailVerificationMailGenContent, sendMail } from "../utils/mail.js";
+import crypto from "crypto";
 
-const register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
 
   // get data and velidate :
   const { firstname, lastname, username, email, password, role } = req.body;
@@ -73,12 +74,65 @@ const register = asyncHandler(async (req, res) => {
       },
     })
   );
+
 });
 
+export const verify = asyncHandler(async(req,res) => {
+
+  const {token} = req.params;
+  if(!token){
+    console.log("Token required!");
+    return res.status(400).json(
+      new ApiError(400,"Token required!")
+    )
+  }
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  const user = await db.user.findFirst({
+    where:{verificationToken: hashedToken}
+  })
+  if(!user){
+    console.log("User not found!");
+    return res.status(409).json(
+      new ApiError(409,"User not found!")
+    )
+  }
+
+  const isTokenExpired = user.verificationTokenExpiry < new Date();
+  if(isTokenExpired){
+    console.log("Token Expired!");
+    return res.status(400).json(
+      new ApiError(400,"Token expired, resend its!")
+    )
+  }
+
+  const updatedUser = await db.user.update({
+    where:{id:user.id},
+    data:{
+      isVerified:true,
+      verificationToken:undefined,
+      verificationTokenExpiry:undefined,
+    }
+  })
+  
+
+  res.status(200).json(
+    new ApiResponse(200,"User verify successfully!",{
+      user: {
+        id: updatedUser.id,
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      },
+    })
+  )
+
+})
 
 
-
-const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res
@@ -122,7 +176,7 @@ const login = asyncHandler(async (req, res) => {
   );
 });
 
-const logout = asyncHandler(async (req, res) => {
+export const logout = asyncHandler(async (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
     sameSite: "strict",
@@ -131,7 +185,7 @@ const logout = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, "User Logout Successfully!"));
 });
 
-const profile = asyncHandler(async (req, res) => {
+export const profile = asyncHandler(async (req, res) => {
   res.status(200).json(
     new ApiResponse(200, "User Authentication Successfully!", {
       user: req.user,
@@ -139,4 +193,3 @@ const profile = asyncHandler(async (req, res) => {
   );
 });
 
-export { register, login, logout, profile };
