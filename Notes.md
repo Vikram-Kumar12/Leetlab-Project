@@ -220,6 +220,7 @@
 - 3. Enter name apko jo dena hai
 - 4. npx prisma db push
 
+*** data base dekhne ke liye *** : npx prisma studio
 ### -----------------------------------------------------------------
 # 🚀 Setting Up WSL, Docker, and Judge0 on Windows
 

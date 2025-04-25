@@ -1048,6 +1048,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry: Date | null
     changePasswordToken: string | null
     changePasswordTokenExpiry: Date | null
+    refreshToken: string | null
+    refreshTokenExpiry: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1068,6 +1070,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry: Date | null
     changePasswordToken: string | null
     changePasswordTokenExpiry: Date | null
+    refreshToken: string | null
+    refreshTokenExpiry: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1088,6 +1092,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry: number
     changePasswordToken: number
     changePasswordTokenExpiry: number
+    refreshToken: number
+    refreshTokenExpiry: number
     _all: number
   }
 
@@ -1110,6 +1116,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: true
     changePasswordToken?: true
     changePasswordTokenExpiry?: true
+    refreshToken?: true
+    refreshTokenExpiry?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1130,6 +1138,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: true
     changePasswordToken?: true
     changePasswordTokenExpiry?: true
+    refreshToken?: true
+    refreshTokenExpiry?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1150,6 +1160,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: true
     changePasswordToken?: true
     changePasswordTokenExpiry?: true
+    refreshToken?: true
+    refreshTokenExpiry?: true
     _all?: true
   }
 
@@ -1243,6 +1255,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry: Date | null
     changePasswordToken: string | null
     changePasswordTokenExpiry: Date | null
+    refreshToken: string | null
+    refreshTokenExpiry: Date | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1280,6 +1294,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: boolean
     changePasswordToken?: boolean
     changePasswordTokenExpiry?: boolean
+    refreshToken?: boolean
+    refreshTokenExpiry?: boolean
     problems?: boolean | User$problemsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1302,6 +1318,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: boolean
     changePasswordToken?: boolean
     changePasswordTokenExpiry?: boolean
+    refreshToken?: boolean
+    refreshTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1322,6 +1340,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: boolean
     changePasswordToken?: boolean
     changePasswordTokenExpiry?: boolean
+    refreshToken?: boolean
+    refreshTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1342,9 +1362,11 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: boolean
     changePasswordToken?: boolean
     changePasswordTokenExpiry?: boolean
+    refreshToken?: boolean
+    refreshTokenExpiry?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "username" | "email" | "image" | "role" | "password" | "createdAt" | "updatedAt" | "isVerified" | "verificationToken" | "verificationTokenExpiry" | "resetPasswordToken" | "resetPasswordTokenExpiry" | "changePasswordToken" | "changePasswordTokenExpiry", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "username" | "email" | "image" | "role" | "password" | "createdAt" | "updatedAt" | "isVerified" | "verificationToken" | "verificationTokenExpiry" | "resetPasswordToken" | "resetPasswordTokenExpiry" | "changePasswordToken" | "changePasswordTokenExpiry" | "refreshToken" | "refreshTokenExpiry", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     problems?: boolean | User$problemsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1375,6 +1397,8 @@ export namespace Prisma {
       resetPasswordTokenExpiry: Date | null
       changePasswordToken: string | null
       changePasswordTokenExpiry: Date | null
+      refreshToken: string | null
+      refreshTokenExpiry: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1816,6 +1840,8 @@ export namespace Prisma {
     readonly resetPasswordTokenExpiry: FieldRef<"User", 'DateTime'>
     readonly changePasswordToken: FieldRef<"User", 'String'>
     readonly changePasswordTokenExpiry: FieldRef<"User", 'DateTime'>
+    readonly refreshToken: FieldRef<"User", 'String'>
+    readonly refreshTokenExpiry: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -3445,7 +3471,9 @@ export namespace Prisma {
     resetPasswordToken: 'resetPasswordToken',
     resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
     changePasswordToken: 'changePasswordToken',
-    changePasswordTokenExpiry: 'changePasswordTokenExpiry'
+    changePasswordTokenExpiry: 'changePasswordTokenExpiry',
+    refreshToken: 'refreshToken',
+    refreshTokenExpiry: 'refreshTokenExpiry'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -3632,6 +3660,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     changePasswordToken?: StringNullableFilter<"User"> | string | null
     changePasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
+    refreshTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     problems?: ProblemListRelationFilter
   }
 
@@ -3653,6 +3683,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
     changePasswordToken?: SortOrderInput | SortOrder
     changePasswordTokenExpiry?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    refreshTokenExpiry?: SortOrderInput | SortOrder
     problems?: ProblemOrderByRelationAggregateInput
   }
 
@@ -3677,6 +3709,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     changePasswordToken?: StringNullableFilter<"User"> | string | null
     changePasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
+    refreshTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     problems?: ProblemListRelationFilter
   }, "id" | "username" | "email">
 
@@ -3698,6 +3732,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
     changePasswordToken?: SortOrderInput | SortOrder
     changePasswordTokenExpiry?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    refreshTokenExpiry?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -3724,6 +3760,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     changePasswordToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     changePasswordTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    refreshTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
 
   export type ProblemWhereInput = {
@@ -3849,6 +3887,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: Date | string | null
     changePasswordToken?: string | null
     changePasswordTokenExpiry?: Date | string | null
+    refreshToken?: string | null
+    refreshTokenExpiry?: Date | string | null
     problems?: ProblemCreateNestedManyWithoutUserInput
   }
 
@@ -3870,6 +3910,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: Date | string | null
     changePasswordToken?: string | null
     changePasswordTokenExpiry?: Date | string | null
+    refreshToken?: string | null
+    refreshTokenExpiry?: Date | string | null
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -3891,6 +3933,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     problems?: ProblemUpdateManyWithoutUserNestedInput
   }
 
@@ -3912,6 +3956,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -3933,6 +3979,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: Date | string | null
     changePasswordToken?: string | null
     changePasswordTokenExpiry?: Date | string | null
+    refreshToken?: string | null
+    refreshTokenExpiry?: Date | string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -3953,6 +4001,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -3973,6 +4023,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ProblemCreateInput = {
@@ -4197,6 +4249,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: SortOrder
     changePasswordToken?: SortOrder
     changePasswordTokenExpiry?: SortOrder
+    refreshToken?: SortOrder
+    refreshTokenExpiry?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -4217,6 +4271,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: SortOrder
     changePasswordToken?: SortOrder
     changePasswordTokenExpiry?: SortOrder
+    refreshToken?: SortOrder
+    refreshTokenExpiry?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -4237,6 +4293,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: SortOrder
     changePasswordToken?: SortOrder
     changePasswordTokenExpiry?: SortOrder
+    refreshToken?: SortOrder
+    refreshTokenExpiry?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4840,6 +4898,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: Date | string | null
     changePasswordToken?: string | null
     changePasswordTokenExpiry?: Date | string | null
+    refreshToken?: string | null
+    refreshTokenExpiry?: Date | string | null
   }
 
   export type UserUncheckedCreateWithoutProblemsInput = {
@@ -4860,6 +4920,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: Date | string | null
     changePasswordToken?: string | null
     changePasswordTokenExpiry?: Date | string | null
+    refreshToken?: string | null
+    refreshTokenExpiry?: Date | string | null
   }
 
   export type UserCreateOrConnectWithoutProblemsInput = {
@@ -4896,6 +4958,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateWithoutProblemsInput = {
@@ -4916,6 +4980,8 @@ export namespace Prisma {
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     changePasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     changePasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ProblemCreateManyUserInput = {

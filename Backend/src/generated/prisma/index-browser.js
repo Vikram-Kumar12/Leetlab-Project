@@ -134,7 +134,9 @@ exports.Prisma.UserScalarFieldEnum = {
   resetPasswordToken: 'resetPasswordToken',
   resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
   changePasswordToken: 'changePasswordToken',
-  changePasswordTokenExpiry: 'changePasswordTokenExpiry'
+  changePasswordTokenExpiry: 'changePasswordTokenExpiry',
+  refreshToken: 'refreshToken',
+  refreshTokenExpiry: 'refreshTokenExpiry'
 };
 
 exports.Prisma.ProblemScalarFieldEnum = {

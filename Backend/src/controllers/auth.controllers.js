@@ -5,9 +5,14 @@ import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/async-handler.js";
 import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
-import { generateTemporaryToken } from "../utils/generateToken.js";
+import {
+  generateTemporaryToken,
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/generateToken.js";
 import { emailVerificationMailGenContent, sendMail } from "../utils/mail.js";
 import crypto from "crypto";
+import { cookie } from "express-validator";
 
 export const register = asyncHandler(async (req, res) => {
   // get data and velidate :
@@ -80,8 +85,6 @@ export const register = asyncHandler(async (req, res) => {
 });
 
 export const verify = asyncHandler(async (req, res) => {
-  console.log("Hello");
-  
   const { token } = req.params;
   if (!token) {
     console.log("Token required!");
@@ -137,22 +140,22 @@ export const verify = asyncHandler(async (req, res) => {
       },
     })
   );
-  
 });
 
 export const resendVerificationEmail = asyncHandler(async (req, res) => {
-
-  const { email, password} = req.body;
-  if (!email || !password ) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return res.status(409).json(new ApiError(409, "All fileds are required!"));
   }
 
   const user = await db.user.findUnique({
-    where: {email},
+    where: { email },
   });
   if (!user) {
     console.log("Invalide email or password");
-    return res.status(409).json(new ApiError(409, "Invalide email or password"));
+    return res
+      .status(409)
+      .json(new ApiError(409, "Invalide email or password"));
   }
 
   const isMatch = bcrypt.compare(password, user.password);
@@ -200,10 +203,9 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
     mailGenContent,
   });
 
-  res.status(201).json(
-    new ApiResponse(201, "Verification email send successfully!")
-  );
-
+  res
+    .status(201)
+    .json(new ApiResponse(201, "Verification email send successfully!"));
 });
 
 export const login = asyncHandler(async (req, res) => {
@@ -218,37 +220,92 @@ export const login = asyncHandler(async (req, res) => {
     where: { email },
   });
   if (!user) {
-    return res.status(401).json(new ApiError(401, "Invalide credentials"));
+    return res.status(401).json(new ApiError(401, "Invalid credentials"));
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    return res.status(401).json(new ApiError(401, "Invalide credentials"));
+    return res.status(401).json(new ApiError(401, "Invalid credentials"));
   }
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  }); // *** jwt secret key generation step : 1. go to terminal then git bash 2. enter openssl rand -hex 32
+  if (!user.isVerified) {
+    return res.status(403).json(new ApiError(403, "Please verify your email before logging in."));
+  }
 
-  res.cookie("jwt", token, {
+  const accessToken = await generateAccessToken(user);
+  const refreshToken = await generateRefreshToken(user);
+
+  const updatedUser = await db.user.update({
+    where:{id:user.id},
+    data:{
+      refreshToken:refreshToken,
+      // refreshTokenExpiry:Date.now() + 7 * 24 * 60 * 60 * 1000, // ❌ This is a number (timestamp)
+      refreshTokenExpiry: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // ✅ This is a Date object
+    }
+  })
+
+  res.cookie("accessToken", accessToken, {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    maxAge: 1000 * 60 * 60 * 24, // 24 hours
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+    maxAge: 1000 * 60 * 60 * 24 * 7 , // 7 days
   });
 
+  // console.log("Cookie set:", req.cookies); // 🔥 Log all cookies
+  // console.log("Access token in cookie:", accessToken); // Or just log the token
+  // console.log("Refresh token in cookie:", refreshToken); // Or just log the token
+  
   res.status(200).json(
     new ApiResponse(200, "User Login Successfully!", {
+      accessToken,
       user: {
         id: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
         email: user.email,
-        name: user.name,
         role: user.role,
         image: user.image,
       },
     })
   );
+
 });
+
+export const refreshAccessToken = asyncHandler(async(req,res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if(!refreshToken){
+    return res.status(401).json(new ApiError(401, "Refresh token missing"));
+  }
+
+  const user = await db.user.findFirst({
+    where:{refreshToken}
+  })
+  if (!user || !user.refreshTokenExpiry || user.refreshTokenExpiry < new Date()) {
+    return res.status(401).json(new ApiError(401, "Refresh token expired or invalid"));
+  }
+
+  const newAccessToken = await generateAccessToken(user);
+  res.cookie("newAccessToken", newAccessToken, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  });
+
+  return res.status(200).json(
+    new ApiResponse(200, "New access token generated!", {
+      accessToken: newAccessToken,
+    })
+  );
+
+})
 
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie("jwt", {

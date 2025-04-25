@@ -43,6 +43,8 @@ model User {
   resetPasswordTokenExpiry  DateTime?
   changePasswordToken       String?
   changePasswordTokenExpiry DateTime?
+  refreshToken              String?
+  refreshTokenExpiry        DateTime?
 
   problems Problem[]
 }
