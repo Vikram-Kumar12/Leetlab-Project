@@ -1,58 +1,48 @@
-import jwt from "jsonwebtoken"
-import { ApiError } from "../utils/api-error.js";
-import { db } from "../libs/db.js";
-import { ApiResponse } from "../utils/api-response.js";
+import jwt from "jsonwebtoken";
 
-export const authMiddleware = async (req, res, next) => {
-    try {
+export const isLoggedIn = async (req, res, next) => {
+  try {
+    console.log("=== Auth Middleware Debug ====");
+    console.log("Cookies :", req.cookies);
+    console.log("Headers:", {
+      cookie: req.headers.cookie,
+      authorization: req.headers.authorization,
+    });
 
-        const token = await req.cookies.jwt;
-        if(!token){
-            return res.status(401).json(
-                {
-                    message:"Token not found!",
-                    success:false
-                }
-            )
-        }
-
-        let decoded;
-        try {
-            decoded = await jwt.verify(token,process.env.JWT_SECRET);
-        } catch (error) {
-            return res.status(401).json(
-                new ApiError(401,"Token not found! (auth.middleware.js)",error)
-            )
-        }
-
-        const user = await db.user.findUnique({
-            where:{
-                id:decoded.id
-            },
-            select:{
-                id:true,
-                name:true,
-                email:true,
-                image:true,
-                role:true
-            }
-        })
-        if(!user){
-            return res.status(404).json(
-                {
-                    message:"User not found!",
-                    success:false
-                }
-            )
-        }
-
-        req.user = user;
-        next();
-    } catch (error) {
-        console.error("Error authenticating user (auth.middleware.js) :",error);
-        res.status(500).json(
-            new ApiError(500,"Error authenticating user (auth.middleware.js)",error)
-        )
+    let token = req.cookies?.accessToken;
+    if (!token && req.headers.authorization) {
+        token = req.headers.authorization.replace("Bearer", "");
+      console.log("No Token");
     }
-    
-}
+
+    console.log("Token found : ", token ? "Yes" : "No");
+    if (!token) {
+      console.log("No Token");
+      return res.status(401).json({
+        success: false,
+        message: "Authentication failed!",
+      });
+    }
+    try {
+        const decoded = await jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
+        console.log("token verified successfully!");
+        console.log("decode data : ",decoded);
+        req.user = decoded;
+        next()
+      } catch (error) {
+        console.log("Token verified error :",error.message);
+        return res.status(500).json({
+          success: false,
+          message: "oken verified error",
+          error: error.message,
+        })
+      }
+  } catch (error) {
+    console.log("Auth middleware failure!");
+    return res.status(500).json({
+      success: false,
+      message: "Failed to authenticate token.",
+      error: error.message,
+    })
+  }
+};

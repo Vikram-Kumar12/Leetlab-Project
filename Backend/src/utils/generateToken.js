@@ -20,9 +20,13 @@ const generateTemporaryToken = function () {
 const generateAccessToken = function (user) {
   return jwt.sign(
     {
-      id:user.id,
-      username:user.username,
-      email:user.email,
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      image: user.image,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {expiresIn:process.env.ACCESS_TOKEN_EXPIRY}
@@ -32,9 +36,13 @@ const generateAccessToken = function (user) {
 const generateRefreshToken = function (user) {
   return jwt.sign(
     {
-      id:user.id,
-      username:user.username,
-      email:user.email,
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      image: user.image,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {expiresIn:process.env.REFRESH_TOKEN_EXPIRY}

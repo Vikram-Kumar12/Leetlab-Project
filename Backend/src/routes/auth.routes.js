@@ -10,7 +10,7 @@ import {
   logout,
   profile,
 } from "../controllers/auth.controllers.js";
-import { authMiddleware } from "../middlewares/auth.middlewares.js";
+import { isLoggedIn } from "../middlewares/auth.middlewares.js";
 
 const authRoutes = express.Router();
 
@@ -20,8 +20,7 @@ authRoutes.post("/resendVerificationEmail", userLoginValidator(), validate, rese
 authRoutes.post("/login", userLoginValidator(), validate, login);
 authRoutes.get("/refreshToken", refreshAccessToken);
 
-authRoutes.post("/logout", authMiddleware, logout);
-
-authRoutes.get("/profile", authMiddleware, profile);
+authRoutes.post("/logout", isLoggedIn, logout);
+authRoutes.get("/profile", isLoggedIn, profile);
 
 export default authRoutes;

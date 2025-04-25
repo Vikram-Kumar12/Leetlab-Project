@@ -291,8 +291,8 @@ export const refreshAccessToken = asyncHandler(async(req,res) => {
     return res.status(401).json(new ApiError(401, "Refresh token expired or invalid"));
   }
 
-  const newAccessToken = await generateAccessToken(user);
-  res.cookie("newAccessToken", newAccessToken, {
+  const accessToken = await generateAccessToken(user);
+  res.cookie("accessToken", accessToken, {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
@@ -301,14 +301,19 @@ export const refreshAccessToken = asyncHandler(async(req,res) => {
 
   return res.status(200).json(
     new ApiResponse(200, "New access token generated!", {
-      accessToken: newAccessToken,
+      accessToken
     })
   );
 
 })
 
 export const logout = asyncHandler(async (req, res) => {
-  res.clearCookie("jwt", {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+  });
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
@@ -316,10 +321,22 @@ export const logout = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, "User Logout Successfully!"));
 });
 
+
 export const profile = asyncHandler(async (req, res) => {
+
+  const user = req.user
+  console.log("UserData : ",user);
+  
   res.status(200).json(
     new ApiResponse(200, "User Authentication Successfully!", {
-      user: req.user,
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      image: user.image,
     })
   );
+  
 });
