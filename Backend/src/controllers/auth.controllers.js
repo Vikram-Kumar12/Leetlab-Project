@@ -10,7 +10,6 @@ import { emailVerificationMailGenContent, sendMail } from "../utils/mail.js";
 import crypto from "crypto";
 
 export const register = asyncHandler(async (req, res) => {
-
   // get data and velidate :
   const { firstname, lastname, username, email, password, role } = req.body;
   if (!firstname || !lastname || !username || !email || !password || !role) {
@@ -62,62 +61,72 @@ export const register = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json(
-    new ApiResponse(201, "User Created Successfully!", {
-      user: {
-        id: newUser.id,
-        firstname: newUser.firstname,
-        lastname: newUser.lastname,
-        username: newUser.username,
-        email: newUser.email,
-        role: role,
-        image: newUser.image,
-      },
-    })
+    new ApiResponse(
+      201,
+      "User Created and Verification email sent successfully",
+      {
+        user: {
+          id: newUser.id,
+          firstname: newUser.firstname,
+          lastname: newUser.lastname,
+          username: newUser.username,
+          email: newUser.email,
+          role: role,
+          image: newUser.image,
+        },
+      }
+    )
   );
-
 });
 
-export const verify = asyncHandler(async(req,res) => {
-
-  const {token} = req.params;
-  if(!token){
+export const verify = asyncHandler(async (req, res) => {
+  console.log("Hello");
+  
+  const { token } = req.params;
+  if (!token) {
     console.log("Token required!");
-    return res.status(400).json(
-      new ApiError(400,"Token required!")
-    )
+    return res.status(400).json(new ApiError(400, "Token required!"));
   }
 
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
   const user = await db.user.findFirst({
-    where:{verificationToken: hashedToken}
-  })
-  if(!user){
+    where: { verificationToken: hashedToken },
+  });
+  if (!user) {
     console.log("User not found!");
-    return res.status(409).json(
-      new ApiError(409,"User not found!")
-    )
+    return res.status(409).json(new ApiError(409, "User not found!"));
   }
 
+  const ERROR_MESSAGES = {
+    USER_ALREADY_VERIFIED: "User already verified!",
+    TOKEN_EXPIRED: "Token expired, please request a new one.",
+  };
+
+  if (user.isVerified) {
+    console.log("User already verified!");
+    return res
+      .status(409)
+      .json(new ApiError(409, ERROR_MESSAGES.USER_ALREADY_VERIFIED));
+  }
   const isTokenExpired = user.verificationTokenExpiry < new Date();
-  if(isTokenExpired){
+  if (isTokenExpired) {
     console.log("Token Expired!");
-    return res.status(400).json(
-      new ApiError(400,"Token expired, resend its!")
-    )
+    return res
+      .status(400)
+      .json(new ApiError(400, ERROR_MESSAGES.TOKEN_EXPIRED));
   }
 
   const updatedUser = await db.user.update({
-    where:{id:user.id},
-    data:{
-      isVerified:true,
-      verificationToken:undefined,
-      verificationTokenExpiry:undefined,
-    }
-  })
-  
+    where: { id: user.id },
+    data: {
+      isVerified: true,
+      verificationToken: null,
+      verificationTokenExpiry: null,
+    },
+  });
 
   res.status(200).json(
-    new ApiResponse(200,"User verify successfully!",{
+    new ApiResponse(200, "User verify successfully!", {
       user: {
         id: updatedUser.id,
         firstname: updatedUser.firstname,
@@ -127,10 +136,75 @@ export const verify = asyncHandler(async(req,res) => {
         role: updatedUser.role,
       },
     })
-  )
+  );
+  
+});
 
-})
+export const resendVerificationEmail = asyncHandler(async (req, res) => {
 
+  const { email, password} = req.body;
+  if (!email || !password ) {
+    return res.status(409).json(new ApiError(409, "All fileds are required!"));
+  }
+
+  const user = await db.user.findUnique({
+    where: {email},
+  });
+  if (!user) {
+    console.log("Invalide email or password");
+    return res.status(409).json(new ApiError(409, "Invalide email or password"));
+  }
+
+  const isMatch = bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    console.log("Invalide email or password");
+    return res.status(400).json({
+      success: false,
+      message: "Invalide email or password",
+    });
+  }
+
+  const ERROR_MESSAGES = {
+    USER_ALREADY_VERIFIED: "User already verified!",
+    TOKEN_EXPIRED: "Token expired, please request a new one.",
+  };
+  if (user.isVerified) {
+    console.log("User already verified!");
+    return res
+      .status(409)
+      .json(new ApiError(409, ERROR_MESSAGES.USER_ALREADY_VERIFIED));
+  }
+
+  // generate new token :
+  const { unHashedToken, hashedToken, tokenExpiry } =
+    await generateTemporaryToken();
+
+  // update the database :
+  const updatedUser = await db.user.update({
+    where: { id: user.id },
+    data: {
+      verificationToken: hashedToken,
+      verificationTokenExpiry: new Date(tokenExpiry),
+    },
+  });
+
+  // send email :
+  const verificationUrl = `http://localhost:3000/api/v1/auth/verify/${unHashedToken}`;
+  const mailGenContent = emailVerificationMailGenContent(
+    user.username,
+    verificationUrl
+  );
+  await sendMail({
+    email: user.email,
+    subject: "Verify your email address",
+    mailGenContent,
+  });
+
+  res.status(201).json(
+    new ApiResponse(201, "Verification email send successfully!")
+  );
+
+});
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -192,4 +266,3 @@ export const profile = asyncHandler(async (req, res) => {
     })
   );
 });
-

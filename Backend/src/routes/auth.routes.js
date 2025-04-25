@@ -7,6 +7,7 @@ import {
   logout,
   profile,
   verify,
+  resendVerificationEmail,
 } from "../controllers/auth.controllers.js";
 import { authMiddleware } from "../middlewares/auth.middlewares.js";
 
@@ -14,6 +15,8 @@ const authRoutes = express.Router();
 
 authRoutes.post("/register", userRegistrationValidator(), validate, register);
 authRoutes.get("/verify/:token",verify);
+
+authRoutes.post("/resendVerificationEmail", userLoginValidator(), validate, resendVerificationEmail);
 
 authRoutes.post("/login", userLoginValidator(), validate, login);
 
