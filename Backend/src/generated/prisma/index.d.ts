@@ -1046,6 +1046,7 @@ export namespace Prisma {
     verificationTokenExpiry: Date | null
     forgotPasswordToken: string | null
     forgotPasswordTokenExpiry: Date | null
+    forgotPasswordEmailisVerified: boolean | null
     refreshToken: string | null
     refreshTokenExpiry: Date | null
   }
@@ -1066,6 +1067,7 @@ export namespace Prisma {
     verificationTokenExpiry: Date | null
     forgotPasswordToken: string | null
     forgotPasswordTokenExpiry: Date | null
+    forgotPasswordEmailisVerified: boolean | null
     refreshToken: string | null
     refreshTokenExpiry: Date | null
   }
@@ -1086,6 +1088,7 @@ export namespace Prisma {
     verificationTokenExpiry: number
     forgotPasswordToken: number
     forgotPasswordTokenExpiry: number
+    forgotPasswordEmailisVerified: number
     refreshToken: number
     refreshTokenExpiry: number
     _all: number
@@ -1108,6 +1111,7 @@ export namespace Prisma {
     verificationTokenExpiry?: true
     forgotPasswordToken?: true
     forgotPasswordTokenExpiry?: true
+    forgotPasswordEmailisVerified?: true
     refreshToken?: true
     refreshTokenExpiry?: true
   }
@@ -1128,6 +1132,7 @@ export namespace Prisma {
     verificationTokenExpiry?: true
     forgotPasswordToken?: true
     forgotPasswordTokenExpiry?: true
+    forgotPasswordEmailisVerified?: true
     refreshToken?: true
     refreshTokenExpiry?: true
   }
@@ -1148,6 +1153,7 @@ export namespace Prisma {
     verificationTokenExpiry?: true
     forgotPasswordToken?: true
     forgotPasswordTokenExpiry?: true
+    forgotPasswordEmailisVerified?: true
     refreshToken?: true
     refreshTokenExpiry?: true
     _all?: true
@@ -1241,6 +1247,7 @@ export namespace Prisma {
     verificationTokenExpiry: Date | null
     forgotPasswordToken: string | null
     forgotPasswordTokenExpiry: Date | null
+    forgotPasswordEmailisVerified: boolean
     refreshToken: string | null
     refreshTokenExpiry: Date | null
     _count: UserCountAggregateOutputType | null
@@ -1278,6 +1285,7 @@ export namespace Prisma {
     verificationTokenExpiry?: boolean
     forgotPasswordToken?: boolean
     forgotPasswordTokenExpiry?: boolean
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: boolean
     refreshTokenExpiry?: boolean
     problems?: boolean | User$problemsArgs<ExtArgs>
@@ -1300,6 +1308,7 @@ export namespace Prisma {
     verificationTokenExpiry?: boolean
     forgotPasswordToken?: boolean
     forgotPasswordTokenExpiry?: boolean
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: boolean
     refreshTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1320,6 +1329,7 @@ export namespace Prisma {
     verificationTokenExpiry?: boolean
     forgotPasswordToken?: boolean
     forgotPasswordTokenExpiry?: boolean
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: boolean
     refreshTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1340,11 +1350,12 @@ export namespace Prisma {
     verificationTokenExpiry?: boolean
     forgotPasswordToken?: boolean
     forgotPasswordTokenExpiry?: boolean
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: boolean
     refreshTokenExpiry?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "username" | "email" | "image" | "role" | "password" | "createdAt" | "updatedAt" | "isVerified" | "verificationToken" | "verificationTokenExpiry" | "forgotPasswordToken" | "forgotPasswordTokenExpiry" | "refreshToken" | "refreshTokenExpiry", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "username" | "email" | "image" | "role" | "password" | "createdAt" | "updatedAt" | "isVerified" | "verificationToken" | "verificationTokenExpiry" | "forgotPasswordToken" | "forgotPasswordTokenExpiry" | "forgotPasswordEmailisVerified" | "refreshToken" | "refreshTokenExpiry", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     problems?: boolean | User$problemsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1373,6 +1384,7 @@ export namespace Prisma {
       verificationTokenExpiry: Date | null
       forgotPasswordToken: string | null
       forgotPasswordTokenExpiry: Date | null
+      forgotPasswordEmailisVerified: boolean
       refreshToken: string | null
       refreshTokenExpiry: Date | null
     }, ExtArgs["result"]["user"]>
@@ -1814,6 +1826,7 @@ export namespace Prisma {
     readonly verificationTokenExpiry: FieldRef<"User", 'DateTime'>
     readonly forgotPasswordToken: FieldRef<"User", 'String'>
     readonly forgotPasswordTokenExpiry: FieldRef<"User", 'DateTime'>
+    readonly forgotPasswordEmailisVerified: FieldRef<"User", 'Boolean'>
     readonly refreshToken: FieldRef<"User", 'String'>
     readonly refreshTokenExpiry: FieldRef<"User", 'DateTime'>
   }
@@ -3444,6 +3457,7 @@ export namespace Prisma {
     verificationTokenExpiry: 'verificationTokenExpiry',
     forgotPasswordToken: 'forgotPasswordToken',
     forgotPasswordTokenExpiry: 'forgotPasswordTokenExpiry',
+    forgotPasswordEmailisVerified: 'forgotPasswordEmailisVerified',
     refreshToken: 'refreshToken',
     refreshTokenExpiry: 'refreshTokenExpiry'
   };
@@ -3630,6 +3644,7 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     forgotPasswordToken?: StringNullableFilter<"User"> | string | null
     forgotPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFilter<"User"> | boolean
     refreshToken?: StringNullableFilter<"User"> | string | null
     refreshTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     problems?: ProblemListRelationFilter
@@ -3651,6 +3666,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrderInput | SortOrder
     forgotPasswordToken?: SortOrderInput | SortOrder
     forgotPasswordTokenExpiry?: SortOrderInput | SortOrder
+    forgotPasswordEmailisVerified?: SortOrder
     refreshToken?: SortOrderInput | SortOrder
     refreshTokenExpiry?: SortOrderInput | SortOrder
     problems?: ProblemOrderByRelationAggregateInput
@@ -3675,6 +3691,7 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     forgotPasswordToken?: StringNullableFilter<"User"> | string | null
     forgotPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFilter<"User"> | boolean
     refreshToken?: StringNullableFilter<"User"> | string | null
     refreshTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     problems?: ProblemListRelationFilter
@@ -3696,6 +3713,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrderInput | SortOrder
     forgotPasswordToken?: SortOrderInput | SortOrder
     forgotPasswordTokenExpiry?: SortOrderInput | SortOrder
+    forgotPasswordEmailisVerified?: SortOrder
     refreshToken?: SortOrderInput | SortOrder
     refreshTokenExpiry?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3722,6 +3740,7 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     forgotPasswordToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     forgotPasswordTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    forgotPasswordEmailisVerified?: BoolWithAggregatesFilter<"User"> | boolean
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     refreshTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
@@ -3847,6 +3866,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     forgotPasswordToken?: string | null
     forgotPasswordTokenExpiry?: Date | string | null
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: string | null
     refreshTokenExpiry?: Date | string | null
     problems?: ProblemCreateNestedManyWithoutUserInput
@@ -3868,6 +3888,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     forgotPasswordToken?: string | null
     forgotPasswordTokenExpiry?: Date | string | null
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: string | null
     refreshTokenExpiry?: Date | string | null
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -3889,6 +3910,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     problems?: ProblemUpdateManyWithoutUserNestedInput
@@ -3910,6 +3932,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -3931,6 +3954,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     forgotPasswordToken?: string | null
     forgotPasswordTokenExpiry?: Date | string | null
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: string | null
     refreshTokenExpiry?: Date | string | null
   }
@@ -3951,6 +3975,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -3971,6 +3996,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -4195,6 +4221,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrder
     forgotPasswordToken?: SortOrder
     forgotPasswordTokenExpiry?: SortOrder
+    forgotPasswordEmailisVerified?: SortOrder
     refreshToken?: SortOrder
     refreshTokenExpiry?: SortOrder
   }
@@ -4215,6 +4242,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrder
     forgotPasswordToken?: SortOrder
     forgotPasswordTokenExpiry?: SortOrder
+    forgotPasswordEmailisVerified?: SortOrder
     refreshToken?: SortOrder
     refreshTokenExpiry?: SortOrder
   }
@@ -4235,6 +4263,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrder
     forgotPasswordToken?: SortOrder
     forgotPasswordTokenExpiry?: SortOrder
+    forgotPasswordEmailisVerified?: SortOrder
     refreshToken?: SortOrder
     refreshTokenExpiry?: SortOrder
   }
@@ -4838,6 +4867,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     forgotPasswordToken?: string | null
     forgotPasswordTokenExpiry?: Date | string | null
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: string | null
     refreshTokenExpiry?: Date | string | null
   }
@@ -4858,6 +4888,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     forgotPasswordToken?: string | null
     forgotPasswordTokenExpiry?: Date | string | null
+    forgotPasswordEmailisVerified?: boolean
     refreshToken?: string | null
     refreshTokenExpiry?: Date | string | null
   }
@@ -4894,6 +4925,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -4914,6 +4946,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     forgotPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    forgotPasswordEmailisVerified?: BoolFieldUpdateOperationsInput | boolean
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }

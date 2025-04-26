@@ -1,26 +1,31 @@
 import express from "express";
 import {validate} from "../middlewares/validator.middlewares.js"
-import {userRegistrationValidator, userLoginValidator} from "../validators/auth.validators.js"
+import {userRegistrationValidator, userLoginValidator, changePasswordValidator} from "../validators/auth.validators.js"
 import {
-  register,
-  verify,
+  registerUser,
+  verifyUser,
   resendVerificationEmail,
-  login,
+  loginUser,
   refreshAccessToken,
-  logout,
-  profile,
+  logoutUser,
+  getUserProfile,
+  forgotPasswordRequest,
+  verifyYourEmailForChangePassword,
+  changePassword,
 } from "../controllers/auth.controllers.js";
 import { isLoggedIn } from "../middlewares/auth.middlewares.js";
 
 const authRoutes = express.Router();
 
-authRoutes.post("/register", userRegistrationValidator(), validate, register);
-authRoutes.get("/verify/:token",verify);
+authRoutes.post("/register", userRegistrationValidator(), validate, registerUser);
+authRoutes.get("/verify/:token",verifyUser);
 authRoutes.post("/resendVerificationEmail", userLoginValidator(), validate, resendVerificationEmail);
-authRoutes.post("/login", userLoginValidator(), validate, login);
+authRoutes.post("/login", userLoginValidator(), validate, loginUser);
 authRoutes.get("/refreshToken", refreshAccessToken);
-
-authRoutes.post("/logout", isLoggedIn, logout);
-authRoutes.get("/profile", isLoggedIn, profile);
+authRoutes.post("/logout", isLoggedIn, logoutUser);
+authRoutes.get("/profile", isLoggedIn, getUserProfile);
+authRoutes.post("/forgot-password",userLoginValidator(), validate, isLoggedIn,forgotPasswordRequest)
+authRoutes.get("/forgot-password-verification/:forgotPasswordToken",verifyYourEmailForChangePassword)
+authRoutes.post("/changed-password/:forgotPasswordToken",changePasswordValidator(), validate, changePassword)
 
 export default authRoutes;

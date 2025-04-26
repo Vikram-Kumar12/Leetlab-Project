@@ -45,4 +45,18 @@ const userLoginValidator = () => {
     ]
 }
 
-export {userRegistrationValidator, userLoginValidator};
+const changePasswordValidator = () => {
+    return [
+        body('newPassword')
+        .trim()
+        .notEmpty().withMessage("Password is required")
+        .isLength({min:6}).withMessage("Password should be at least 6 characters"),
+
+        body('confirmPassword')
+        .trim()
+        .notEmpty().withMessage("Password is required")
+        .isLength({min:6}).withMessage("Password should be at least 6 characters")
+    ]
+}
+
+export {userRegistrationValidator, userLoginValidator, changePasswordValidator};
