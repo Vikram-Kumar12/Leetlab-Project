@@ -253,7 +253,7 @@
 # Step 2: Install Docker and Docker Compose
 - 1.Install Docker
     - Open the Ubuntu terminal and run:
-        - command : sudo apt update && sudo apt install -y docker.io
+        - command : sudo apt install -y docker.io
         - System update karta hai aur Docker software ko bina confirmation ke install karta hai. 🐳
 - 2.Install Docker Compose
     - Still in the Ubuntu terminal, install Docker Compose:
@@ -271,25 +271,40 @@
         - 🗂️ Downloaded zip file ko extract (unzip) karta hai current folder me. 
 
 - 2.Set Up Secure Passwords
-    - Generate random passwords for Redis and Postgres:
-        - visit : https://www.random.org/passwords/?num=1&len=32&format=plain&rnd=new and copy the first password.
+    - Navigate to the Judge0 folder:
+        - command : cd judge0-v1.13.1
 
     - Open the judge0.conf file:
         - command : nano judge0.conf
+
+    - Generate random passwords for Redis and Postgres:
+        - visit : https://www.random.org/passwords/?num=1&len=32&format=plain&rnd=new and copy the first password.
 
     - Update the REDIS_PASSWORD with the generated password.
     - Repeat the process for POSTGRES_PASSWORD using a new random password.
     - Save and exit (Ctrl + O, Enter, Ctrl + X).
 
 - 3.Start Judge0 Services
-    - Navigate to the Judge0 folder:
-        - command : cd judge0-v1.13.1
 
-        - Check all package install or not
-        - command : ls
+    - Navigate to the Judge0 folder:
+        - ***cd judge0-v1.13.1***
+
+    - Check all package install or not
+        - command : ***ls***
         - if two things show, means all okay.
 
-    - Start the database and Redis services
-    - next day.
+    - Start the database and Redis services:
+        - ***sudo docker-compose up -d db redis***
+    - Wait for a few seconds:
+        - ***sleep 10s***
+    - Start the remaining services:
+        - ***docker-compose up -d***
+    - Wait a few more seconds:
+        - ***sleep 5s***
 
+- 4.Verify the Installation
+    - Open your browser and visit:
+        - ***http://localhost:2358/docs***
+    You should see the Judge0 API documentation page, meaning your Judge0 instance is running successfully!
 
+### -------------------------------------------------------------
