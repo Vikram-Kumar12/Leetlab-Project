@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/api-error.js";
+import {db} from "../libs/db.js"
 
 export const isLoggedIn = async (req, res, next) => {
   try {
