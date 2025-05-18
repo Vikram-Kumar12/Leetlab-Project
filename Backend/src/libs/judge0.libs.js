@@ -11,6 +11,7 @@ export const getJudge0LanguageId = (Language) => {
 
 
 export const submitBatch = async (submissions) => {
+    // ye mere judge0 ke end point /submissions/batch ko hit kar raha hoga.
     const {data} = await axios.post(`${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`,{
         submissions
     })
@@ -34,6 +35,6 @@ export const pollBatchResults = async(tokens)=>{
             (r) => r.status.id !== 1 && r.status.id !== 2
         )
         if(isAllDone) return results;
-        await sleep(1000)
+        await sleep(2000) // 2 second ke bar es end-points ko dubara call karna
     }
 }

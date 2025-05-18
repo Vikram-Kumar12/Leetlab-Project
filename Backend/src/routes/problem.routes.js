@@ -19,9 +19,9 @@ problemRoutes.get("/get-problem/:id", isLoggedIn, getProblemById);
 
 problemRoutes.put("/update-problem/:id", isLoggedIn, checkAdmin, updateProblem);
 
-problemRoutes.put("/delete-problem/:id", isLoggedIn, checkAdmin, deleteProblem);
+problemRoutes.delete("/delete-problem/:id", isLoggedIn, checkAdmin, deleteProblem);
 
-problemRoutes.put(
+problemRoutes.get(
   "/get-solved-problems",
   isLoggedIn,
   getAllProblemsSolvedByUser,
