@@ -14,6 +14,8 @@ app.use(express.static("public"));
 
 // Routes :
 app.use("/api/v1/healthCheck",healthCheckRouter)
-app.use("/api/v1/auth",authRoutes); // authentication routes
+app.use("/api/v1/auth",authRoutes);
 app.use("/api/v1/problems",problemRoutes)
+
+
 export default app;

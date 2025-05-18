@@ -90,7 +90,7 @@
      - POSTGRES_USER= ? - aap apne according username set kar sakte ho
      - POSTGRES_PASSWORD=? - aaha aap password set kro jo rakhna chhate ho 
      - -p 5432:5432 -  Local machine ka port 5432 map kar rahe ho Docker container ke 5432 port se (default PostgreSQL port)
-     - -d postgres - -d means detached mode(detached mode : kahne ka matlb hai ki aap teriminal ko busy nhi rah rahe ho , dusra bhi command run kar sakte ho lekin "Atached mode :" ka matlab hota hai ki aap terminal ko busy rah rhe ho, jab taak aap terimnal ko stop nhi kar dete manually tab taak aap dusra command nhi run kar sakte)  aur postgres means image name
+     - -d postgres - -d means detached mode(detached mode : kahne ka matlb hai ki aap teriminal ko busy nhi rakh rahe ho , dusra bhi command run kar sakte ho lekin "Attached mode :" ka matlab hota hai ki aap terminal ko busy rakh rhe ho, jab taak aap terimnal ko stop nhi kar dete manually tab taak aap dusra command nhi run kar sakte)  aur postgres means image name
 
 - npx prisma generate :
     - Yeh command Prisma Client ko generate karti hai.
@@ -308,4 +308,3 @@
     You should see the Judge0 API documentation page, meaning your Judge0 instance is running successfully!
 
 ### -------------------------------------------------------------
-

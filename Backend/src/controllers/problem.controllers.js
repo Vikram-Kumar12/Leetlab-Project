@@ -9,6 +9,7 @@ import {
 import { ApiResponse } from "../utils/api-response.js";
 
 export const createProblem = asyncHandler(async (req, res) => {
+
   // going to get the all the data from the request body
   // goingto check the user role once again
   // Loop through each reference solution for different languages.
@@ -28,6 +29,7 @@ export const createProblem = asyncHandler(async (req, res) => {
   // going to check the user role once again
 
   try {
+
     for (const [language, solutionCode] of Object.entries(referenceSolution)) {
       const languageId = getJudge0LanguageId(language);
 
@@ -91,9 +93,11 @@ export const createProblem = asyncHandler(async (req, res) => {
       error: "Error While Creating Problem",
     });
   }
+
 });
 
-export const getAllProblems = asyncHandler(async (req, res) => {});
+export const getAllProblems = asyncHandler(async (req, res) => {
+});
 
 export const getProblemById = asyncHandler(async (req, res) => {});
 

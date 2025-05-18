@@ -16,17 +16,18 @@ import {
 } from "../utils/mail.js";
 import crypto from "crypto";
 
+
 export const registerUser = asyncHandler(async (req, res) => {
   const { firstname, lastname, username, email, password, role } = req.body;
   if (!firstname || !lastname || !username || !email || !password || !role) {
-    return res.status(409).json(new ApiError(409, "All fileds are required!"));
+    return res.status(400).json(new ApiError(400, "All fileds are required!"));
   }
 
   const existingUser = await db.user.findUnique({
     where: { email },
   });
   if (existingUser) {
-    return res.status(400).json(new ApiError(400, "User Exists Already"));
+    return res.status(409).json(new ApiError(409, "User Exists Already"));
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -46,7 +47,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     },
   });
   if (!newUser) {
-    return res.status(400).json(new ApiError(400, "User not created", null));
+    return res.status(503).json(new ApiError(503, "User not created", null));
   }
 
   const verificationUrl = `http://localhost:3000/api/v1/auth/verify/${unHashedToken}`;
@@ -93,8 +94,8 @@ export const verifyUser = asyncHandler(async (req, res) => {
     where: { verificationToken: hashedToken },
   });
   if (!user) {
-    console.log("Token not found!");
-    return res.status(409).json(new ApiError(409, "Token not found!"));
+    console.log("User not found!");
+    return res.status(401).json(new ApiError(401, "Token not found!"));
   }
 
   const ERROR_MESSAGES = {
@@ -113,8 +114,8 @@ export const verifyUser = asyncHandler(async (req, res) => {
   if (isTokenExpired) {
     console.log("Token Expired!");
     return res
-      .status(400)
-      .json(new ApiError(400, ERROR_MESSAGES.TOKEN_EXPIRED));
+      .status(403)
+      .json(new ApiError(403, ERROR_MESSAGES.TOKEN_EXPIRED));
   }
 
   const updatedUser = await db.user.update({
@@ -138,12 +139,13 @@ export const verifyUser = asyncHandler(async (req, res) => {
       },
     }),
   );
+
 });
 
 export const resendVerificationEmail = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(409).json(new ApiError(409, "All fileds are required!"));
+    return res.status(400).json(new ApiError(400, "All fileds are required!"));
   }
 
   const user = await db.user.findUnique({
@@ -152,14 +154,14 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
   if (!user) {
     console.log("Invalide email or password");
     return res
-      .status(409)
-      .json(new ApiError(409, "Invalide email or password"));
+      .status(401)
+      .json(new ApiError(401, "Invalide email or password"));
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     console.log("Invalide email or password");
-    return res.status(400).json({
+    return res.status(401).json({
       success: false,
       message: "Invalide email or password",
     });
@@ -169,6 +171,7 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
     USER_ALREADY_VERIFIED: "User already verified!",
     TOKEN_EXPIRED: "Token expired, please request a new one.",
   };
+
   if (user.isVerified) {
     console.log("User already verified!");
     return res
@@ -204,14 +207,15 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
   res
     .status(201)
     .json(new ApiResponse(201, "Verification email send successfully!"));
+
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res
-      .status(409)
-      .json(new ApiError(409, "Please provide email & password!"));
+      .status(400)
+      .json(new ApiError(400, "Please provide email & password!"));
   }
 
   const user = await db.user.findUnique({
@@ -228,8 +232,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (!user.isVerified) {
     return res
-      .status(403)
-      .json(new ApiError(403, "Please verify your email before logging in."));
+      .status(422)
+      .json(new ApiError(422, "Please verify your email before logging in."));
   }
 
   const accessToken = await generateAccessToken(user);
@@ -275,6 +279,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       },
     }),
   );
+
 });
 
 export const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -309,6 +314,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       accessToken,
     }),
   );
+
 });
 
 export const logoutUser = asyncHandler(async (req, res) => {
@@ -350,6 +356,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
   });
 
   res.status(200).json(new ApiResponse(200, "User Logout Successfully!"));
+
 });
 
 export const getUserProfile = asyncHandler(async (req, res) => {
@@ -367,11 +374,12 @@ export const getUserProfile = asyncHandler(async (req, res) => {
       image: user.image,
     }),
   );
+
 });
 
 export const forgotPasswordRequest = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if ((!email || !password)) {
+  const { email} = req.body;
+  if (!email) {
     console.log("Required all fields!");
     return res.status(400).json(new ApiError(400, "Required all fields!"));
   }
@@ -381,13 +389,7 @@ export const forgotPasswordRequest = asyncHandler(async (req, res) => {
   });
   if (!user) {
     console.log("Invalide credentials!");
-    return res.status(409).json(new ApiError(409, "Invalide credentials!"));
-  }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    console.log("Invalide credentials!");
-    return res.status(409).json(new ApiError(409, "Invalide credentials!"));
+    return res.status(401).json(new ApiError(401, "Invalide credentials!"));
   }
 
   const { unHashedToken, hashedToken, tokenExpiry } =
@@ -446,8 +448,8 @@ export const verifyYourEmailForChangePassword = asyncHandler(
     if (!forgotPasswordToken) {
       console.log("ForgotPasswordToken is required!");
       return res
-        .status(400)
-        .json(new ApiError(400, "ForgotPasswordToken is required!"));
+        .status(401)
+        .json(new ApiError(401, "ForgotPasswordToken is required!"));
     }
 
     const hashedToken = await crypto
@@ -461,8 +463,8 @@ export const verifyYourEmailForChangePassword = asyncHandler(
     if (!user) {
       console.log("ForgotPasswordToken is invalide!");
       return res
-        .status(409)
-        .json(new ApiError(409, "ForgotPasswordToken is invalide!"));
+        .status(401)
+        .json(new ApiError(401, "ForgotPasswordToken is invalide!"));
     }
 
     const ERROR_MESSAGES = {
@@ -475,8 +477,8 @@ export const verifyYourEmailForChangePassword = asyncHandler(
     ) {
       console.log("Token Expired or missing expiry field!");
       return res
-        .status(400)
-        .json(new ApiError(400, ERROR_MESSAGES.TOKEN_EXPIRED));
+        .status(401)
+        .json(new ApiError(401, ERROR_MESSAGES.TOKEN_EXPIRED));
     }
 
     await db.user.update({
@@ -499,6 +501,7 @@ export const verifyYourEmailForChangePassword = asyncHandler(
         },
       ),
     );
+
   },
 );
 
@@ -537,8 +540,8 @@ export const changePassword = asyncHandler(async (req, res) => {
   });
   if (!user) {
     return res
-      .status(400)
-      .json(new ApiResponse(400, "Invalid or expired token"));
+      .status(401)
+      .json(new ApiResponse(401, "Invalid or expired token"));
   }
 
   if (!user.forgotPasswordEmailisVerified) {
@@ -554,6 +557,7 @@ export const changePassword = asyncHandler(async (req, res) => {
       forgotPasswordToken: null,
       forgotPasswordTokenExpiry: null,
       password: hashedPassword,
+      forgotPasswordEmailisVerified:false,
     },
   });
 
