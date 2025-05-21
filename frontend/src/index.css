@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+@font-face {
+  /* LeetLab name */
+  font-family: 'font1';
+  src: url('../public/assets/font1.otf') format('truetype'); 
+  font-weight:700;
+  font-style: normal;
+}
+@font-face {
+  /* All text */
+  font-family: 'font3';
+  src: url('../public/assets/font3.ttf') format('truetype'); 
+  font-weight:700;
+  font-style: normal;
+}
+@font-face {
+  /* used in handing */
+  font-family: 'font4';
+  src: url('../public/assets/font4.woff') format('truetype'); 
+  font-weight:700;
+  font-style: normal;
+}
