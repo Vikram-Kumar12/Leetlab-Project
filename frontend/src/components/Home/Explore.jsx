@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import image1 from "../../../public/Images/image1.png";
-
+import images1 from "../../../public/Images/images1.png";
 const floatTransition = {
   repeat: Infinity,
   duration: 3,
@@ -9,9 +8,10 @@ const floatTransition = {
   repeatType: "mirror",
 };
 
-const Card = ({ className, bg, delay = 0, language, code, output }) => (
+const Card = ({ className, bg, delay = 0, language, code, output, style }) => (
   <motion.div
     className={`absolute w-[200px] md:w-[240px] lg:w-[280px] h-full rounded-2xl shadow-xl p-6 flex flex-col justify-between ${bg} ${className}`}
+    style={style}
     animate={{ x: [-4, 4, -4] }}
     transition={{ ...floatTransition, delay }}
   >
@@ -57,8 +57,8 @@ const Explore = () => {
 
   const cards = [
     {
-      left: "0",
-      top: "",
+      left: "150",
+      top: "50",
       bg: "bg-yellow-100",
       delay: 0,
       language: "Java",
@@ -70,8 +70,8 @@ const Explore = () => {
       output: "Hello Java!",
     },
     {
-      left: "20",
-      top: "8",
+      left: "0",
+      top: "0",
       bg: "bg-green-200",
       delay: 0.5,
       language: "Python",
@@ -82,8 +82,8 @@ hello_world()`,
       output: "Hello Python!",
     },
     {
-      left: "40",
-      top: "16",
+      left: "80",
+      top: "30",
       bg: "bg-gradient-to-b from-cyan-400 to-cyan-500",
       delay: 1,
       language: "JavaScript",
@@ -97,15 +97,13 @@ helloWorld();`,
   ];
 
   return (
-
-    <motion.div
+    <motion.div id="explore"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 4 }}
-      className="w-full min-h-screen px-4 sm:px-6 lg:px-8 bg-[#FCFBFA] lg:py-30 py-12 overflow-hidden"
+      className="w-full  px-4 sm:px-6 lg:px-8  lg:py-0  lg:mb-20 mb-10"
     >
       <div className="max-w-7xl mx-auto">
-
         {/* Mobile: Right Content at Top */}
         <div className="md:hidden w-full flex flex-col px-5">
           <div className="w-full flex items-center justify-center mb-8">
@@ -114,9 +112,11 @@ helloWorld();`,
               {cards.map((card, index) => (
                 <Card
                   key={index}
-                  className={`left-${card.left} top-${card.top} z-${
-                    (index + 1) * 10
-                  }`}
+                  className={`z-${(index + 1) * 10}`}
+                  style={{
+                    left: `${card.left}px`,
+                    top: `${card.top || 0}px`,
+                  }}
                   bg={card.bg}
                   delay={card.delay}
                   language={card.language}
@@ -136,8 +136,8 @@ helloWorld();`,
           >
             <motion.div className="flex items-center justify-center gap-5 mb-6">
               <motion.h1
-                style={{ fontFamily: "font2" }}
-                className="text-4xl font-bold text-gray-800 text-center"
+                style={{ fontFamily: "font1" }}
+                className="text-4xl font-bold text-[#35A398] text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
@@ -145,14 +145,14 @@ helloWorld();`,
                 Start Exploring
               </motion.h1>
               <img
-                src={image1}
-                alt="image1"
-                className="w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem]"
+                src={images1}
+                alt="images1"
+                className="w-[4rem] h-[4rem] md:w-[6rem] md:h-[6rem] bg-transparent"
               />
             </motion.div>
 
             <motion.p
-              className="text-lg text-gray-600 text-center"
+              className="text-lg text-gray-300 text-center mb-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -160,6 +160,14 @@ helloWorld();`,
               LeetLab’s Explore feature is a structured guide designed to help
               you progress efficiently, offering curated paths that align with
               your programming and career goals.
+            </motion.p>
+            <motion.p
+              className="text-lg text-blue-600 text-center cursor-pointer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              Get Started <span>{">"}</span>
             </motion.p>
           </motion.div>
         </div>
@@ -173,10 +181,13 @@ helloWorld();`,
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <motion.div className="flex items-center justify-center lg:justify-end  gap-5">
+            <motion.div
+              style={{ backgroundColor: "#1D232A" }}
+              className="flex items-center justify-center lg:justify-end  gap-5"
+            >
               <motion.h1
-                style={{ fontFamily: "font2" }}
-                className="text-4xl md:text-5xl font-bold text-gray-800 mb-1 text-center"
+                style={{ fontFamily: "font1" }}
+                className="text-4xl md:text-5xl font-bold text-[#189288]  text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
@@ -186,14 +197,18 @@ helloWorld();`,
               </motion.h1>
               <motion.img
                 whileHover={{ scale: 1.05 }}
-                src={image1}
-                alt="image1"
+                src={images1}
+                alt="images1"
                 className="w-[6rem] h-[6rem]"
+                style={{
+                  backgroundColor: "transparent",
+                  mixBlendMode: "normal",
+                }}
               />
             </motion.div>
 
             <motion.p
-              className="text-lg text-gray-600 md:text-center"
+              className="text-sm text-gray-200 md:text-center mb-5 lg:text-end mt-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.6 }}
@@ -201,6 +216,14 @@ helloWorld();`,
               LeetLab’s Explore feature is a structured guide designed to help
               you progress efficiently, offering curated paths that align with
               your programming and career goals.
+            </motion.p>
+            <motion.p
+              className="text-md text-blue-600 md:text-center lg:text-end cursor-pointer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.6 }}
+            >
+              Get Started <span>{">"}</span>
             </motion.p>
           </motion.div>
 
@@ -214,11 +237,24 @@ helloWorld();`,
             >
               {/* Left Card - Yellow */}
               {cards.map((card, index) => (
+                // <Card
+                //   key={index}
+                //   className={`left-${card.left} top-${card.top} z-${
+                //     (index + 1) * 10
+                //   }`}
+                //   bg={card.bg}
+                //   delay={card.delay}
+                //   language={card.language}
+                //   code={card.code}
+                //   output={card.output}
+                // />
                 <Card
                   key={index}
-                  className={`left-${card.left} top-${card.top} z-${
-                    (index + 1) * 10
-                  }`}
+                  className={`z-${(index + 1) * 10}`}
+                  style={{
+                    left: `${card.left}px`,
+                    top: `${card.top || 0}px`,
+                  }}
                   bg={card.bg}
                   delay={card.delay}
                   language={card.language}
@@ -231,7 +267,6 @@ helloWorld();`,
         </div>
       </div>
     </motion.div>
-    
   );
 };
 

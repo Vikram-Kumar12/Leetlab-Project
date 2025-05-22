@@ -4,6 +4,9 @@ import Explore from '../components/Home/Explore'
 import Product from '../components/Home/Product'
 import Developer from '../components/Home/Developer'
 import Hero from '../components/Home/Hero'
+import ContactPage from '../components/ReUseAbleCode/ContactPage'
+import Features from '../components/Home/Features'
+
 
 const Home = () => {
   return (
@@ -13,6 +16,8 @@ const Home = () => {
       <Explore/>
       <Product/>
       <Developer/>
+      <Features/>
+      <ContactPage/>
     </div>
   )
 }

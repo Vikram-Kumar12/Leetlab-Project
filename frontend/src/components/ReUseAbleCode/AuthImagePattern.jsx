@@ -1,10 +1,8 @@
-import { Code, Terminal, FileCode, Braces } from "lucide-react"
-import { useEffect, useState } from "react"
+import { Code, Terminal, FileCode, Braces } from "lucide-react";
+import { useEffect, useState } from "react";
 
-
-
-const CodeBackground = ({ title, subtitle }) => {
-  const [activeIndex, setActiveIndex] = useState(0)
+const CodeBackground = ({ title, subtitle, color }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Code snippets to display in the background
   const codeSnippets = [
@@ -56,18 +54,23 @@ function reverseList(head) {
   
   return stack.length === 0;
 }`,
-  ]
+  ];
 
   // Rotate through code snippets
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % codeSnippets.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [codeSnippets.length])
+      setActiveIndex((prev) => (prev + 1) % codeSnippets.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [codeSnippets.length]);
 
   return (
-    <div className="hidden lg:flex flex-col items-center justify-center bg-slate-900 text-white p-12 relative overflow-hidden">
+    <div
+      className={`${
+        !color ? "bg-slate-900" : ""
+      } lg:flex flex-col items-center justify-center text-white p-12 relative overflow-hidden rounded-2xl`}
+      style={color ? { backgroundColor: color } : {}}
+    >
       {/* Animated code symbols in background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-[10%] left-[15%] animate-pulse">
@@ -104,7 +107,7 @@ function reverseList(head) {
           </div>
 
           {/* Code content */}
-          <div className="p-4 font-mono text-xs sm:text-sm overflow-hidden relative h-64">
+          <div className="p-4 font-mono text-xs sm:text-sm overflow-hidden relative h-80 w-150">
             <pre className="whitespace-pre-wrap text-green-400 transition-opacity duration-1000">
               {codeSnippets[activeIndex]}
             </pre>
@@ -122,11 +125,21 @@ function reverseList(head) {
         </div>
 
         {/* Text content */}
-        <h2 className="text-2xl font-bold mb-4 text-center">{title}</h2>
-        <p className="text-slate-300 text-center">{subtitle}</p>
+        <h2
+          style={{ fontFamily: "font4" }}
+          className="text-2xl font-bold mb-1 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+        >
+          {title}
+        </h2>
+        <p
+          style={{ fontFamily: "font4" }}
+          className="text-slate-200 text-center"
+        >
+          {subtitle}
+        </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CodeBackground
+export default CodeBackground;

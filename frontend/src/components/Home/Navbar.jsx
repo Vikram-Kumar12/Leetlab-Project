@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import logo from "../../../public/logo.png"
 import {Link} from "react-router-dom"
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -33,10 +34,10 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`w-full z-50 ${isScrolled ? ' shadow-2xl' : 'bg-transparent'} transition-all duration-300  py-5 hidden md:block `}
+      className={`w-full z-50 ${isScrolled ? '  shadow-2xl' : 'bg-transparent'} transition-all duration-300  py-10 hidden md:block `}
     >
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16">
 
           {/* Logo and name */}
@@ -45,10 +46,10 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-2 cursor-pointer"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <img src={logo} alt="image" />
+              <div className=" bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <img src={logo} alt="image" className='w-[3rem] h-[3rem]'/>
               </div>
-              <span style={{ fontFamily: "font4" }} className="text-2xl font-bold white ml-1">LeetLab</span>
+              <span style={{ fontFamily: "font4" }} className="text-4xl font-bold white ml-1 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">LeetLab</span>
             </motion.div>
           </div>
 
@@ -67,7 +68,7 @@ const Navbar = () => {
                       transition: { duration: 0.2 }
                     }}
                     whileTap={{ scale: 0.95 }}
-                    className="text-white hover:bg-white hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-full"
+                    className="relative after:content-[''] after:absolute after:left-3 after:bottom-0 after:w-0 after:h-[1px] after:bg-white hover:after:w-full after:transition-all text-white  transition-colors duration-200 px-3 py-2 rounded-full text-xl font-semibold"
                   >
                     {item.name}
                   </Link>
@@ -75,20 +76,15 @@ const Navbar = () => {
                   <div className="relative group">
                     <a 
                       href={`#${item.id}`} 
-                      className="text-white hover:bg-white hover:text-gray-900 font-medium transition-colors duration-200 px-3 py-2 rounded-full"
+                      className="relative after:content-[''] after:absolute after:left-3 after:bottom-0 after:w-0 after:h-[1px] after:bg-white hover:after:w-full after:transition-all text-white transition-colors duration-200 px-3 py-2 rounded-full text-xl font-semibold"
                     >
                       {item.name}
                     </a>
-                    {/* <motion.div 
-                      className="absolute bottom-0 left-0 w-full h-0.5"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    /> */}
                   </div>
                 )}
               </motion.div>
             ))}
+
           </div>
 
         </div>
