@@ -30,3 +30,6 @@ html {
 * {
   user-select: none;
 }
+input:focus {
+  outline: none;
+}

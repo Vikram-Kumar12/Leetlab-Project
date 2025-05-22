@@ -68,7 +68,7 @@ function reverseList(head) {
     <div
       className={`${
         !color ? "bg-slate-900" : ""
-      } lg:flex flex-col items-center justify-center text-white p-12 relative overflow-hidden rounded-2xl`}
+      } sm:flex flex-col items-center justify-center text-white p-12 relative overflow-hidden rounded`}
       style={color ? { backgroundColor: color } : {}}
     >
       {/* Animated code symbols in background */}
@@ -137,7 +137,9 @@ function reverseList(head) {
         >
           {subtitle}
         </p>
+
       </div>
+      
     </div>
   );
 };

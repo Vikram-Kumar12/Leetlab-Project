@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-
-const Button = ({ children }) => (
+import { Link } from "react-router";
+const Button = ({ children, to }) => (
   <motion.button
     initial="rest"
     whileHover="hover"
@@ -24,9 +24,9 @@ const Button = ({ children }) => (
     />
 
     {/* Text Layer */}
-    <span className="relative z-10 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:text-white transition-colors duration-300">
+    <Link to={to} className="relative z-10 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent group-hover:text-white transition-colors duration-300">
       {children}
-    </span>
+    </Link>
   </motion.button>
 );
 

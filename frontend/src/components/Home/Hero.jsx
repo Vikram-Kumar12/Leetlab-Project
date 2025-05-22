@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Button from "../ReUseAbleCode/Button";
+import { Link } from "react-router";
 const Hero = () => {
   const [size, setSize] = useState(0);
   const requestRef = useRef();
@@ -145,18 +146,22 @@ const Hero = () => {
           >
             <Button
               children="Create Account"
+              to="/signin"
             />
-            <motion.button
+            <motion.div
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.95 }}
+            >
+            <Link to="/signin"
               style={{ fontFamily: "font2" }} 
               className="block lg:hidden px-8 py-3 bg-gradient-to-r from-blue-400 to-purple-600 text-white font-semibold rounded-lg text-xl shadow-lg"
             >
               Create Account
-            </motion.button>
+            </Link>
+            </motion.div>
           </motion.div>
 
         </motion.div>
