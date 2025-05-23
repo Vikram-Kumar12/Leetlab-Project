@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
 import AuthImagePattern from "../ReUseAbleCode/AuthImagePattern";
 import logo from "../../../public/logo.png";
 import { motion } from "framer-motion";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const SignUpSchema = z.object({
   firstname: z.string().min(1, "Firstname is required"),
@@ -17,22 +18,36 @@ const SignUpSchema = z.object({
   role: z.enum(["USER", "ADMIN"]),
 });
 
+
+
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const {signup, isSigninUp} = useAuthStore()
+  const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(SignUpSchema),
   });
-
+  
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      await signup(data)
+      console.log("Signup data : ", data);
+      reset(); // ⬅️ form fields ko empty karne ke liye
+      navigate('/signin')
+    } catch (error) {
+      console.error("Signup time error",error)
+    }
   };
 
   return (
-    <div className="grid lg:grid-cols-2 bg-slate-900">
+    <div className="lg:h-screen grid lg:grid-cols-2 bg-slate-900 ">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">
           
@@ -253,17 +268,16 @@ const SignUpPage = () => {
               whileTap={{ scale: 0.95 }}
               type="submit"
               className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"
-              // disabled={isSigninUp}
+              disabled={isSigninUp}
             >
-              {/* {isSigninUp ? (
+              {isSigninUp ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
                   Loading...
                 </>
               ) : (
                 "Sign in"
-              )} */}
-              SignUp
+              )}
             </motion.button>
           </form>
 

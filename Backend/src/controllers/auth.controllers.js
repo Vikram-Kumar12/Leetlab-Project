@@ -16,7 +16,6 @@ import {
 } from "../utils/mail.js";
 import crypto from "crypto";
 
-
 export const registerUser = asyncHandler(async (req, res) => {
   const { firstname, lastname, username, email, password, role } = req.body;
   if (!firstname || !lastname || !username || !email || !password || !role) {
@@ -126,20 +125,7 @@ export const verifyUser = asyncHandler(async (req, res) => {
       verificationTokenExpiry: null,
     },
   });
-
-  res.status(200).json(
-    new ApiResponse(200, "User verify successfully!", {
-      user: {
-        id: updatedUser.id,
-        firstname: updatedUser.firstname,
-        lastname: updatedUser.lastname,
-        username: updatedUser.username,
-        email: updatedUser.email,
-        role: updatedUser.role,
-      },
-    }),
-  );
-
+  return res.redirect("http://localhost:5173/signin");
 });
 
 export const resendVerificationEmail = asyncHandler(async (req, res) => {
@@ -207,7 +193,6 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
   res
     .status(201)
     .json(new ApiResponse(201, "Verification email send successfully!"));
-
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -279,7 +264,6 @@ export const loginUser = asyncHandler(async (req, res) => {
       },
     }),
   );
-
 });
 
 export const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -314,7 +298,6 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       accessToken,
     }),
   );
-
 });
 
 export const logoutUser = asyncHandler(async (req, res) => {
@@ -356,29 +339,28 @@ export const logoutUser = asyncHandler(async (req, res) => {
   });
 
   res.status(200).json(new ApiResponse(200, "User Logout Successfully!"));
-
 });
 
 export const getUserProfile = asyncHandler(async (req, res) => {
   const user = req.user;
   console.log("UserData : ", user);
-
   res.status(200).json(
     new ApiResponse(200, "User Authentication Successfully!", {
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      image: user.image,
+      user: {
+        id: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        image: user.image,
+      },
     }),
   );
-
 });
 
 export const forgotPasswordRequest = asyncHandler(async (req, res) => {
-  const { email} = req.body;
+  const { email } = req.body;
   if (!email) {
     console.log("Required all fields!");
     return res.status(400).json(new ApiError(400, "Required all fields!"));
@@ -424,8 +406,8 @@ export const forgotPasswordRequest = asyncHandler(async (req, res) => {
       200,
       "ForgotPassword verification email sent successfully in your e-mail address!",
       {
-        unHashedToken,
         user: {
+          forgotPasswordToken:unHashedToken,
           id: user.id,
           firstname: user.firstname,
           lastname: user.lastname,
@@ -437,6 +419,9 @@ export const forgotPasswordRequest = asyncHandler(async (req, res) => {
       },
     ),
   );
+
+
+
 
 });
 
@@ -487,20 +472,7 @@ export const verifyYourEmailForChangePassword = asyncHandler(
         forgotPasswordEmailisVerified: true,
       },
     });
-
-    res.status(200).json(
-      new ApiResponse(
-        200,
-        "Email verified successfully, now you can changed the password!",
-        {
-          user: {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-          },
-        },
-      ),
-    );
+    res.redirect(`http://localhost:5173/change-password?token=${forgotPasswordToken}`);
 
   },
 );
@@ -508,6 +480,7 @@ export const verifyYourEmailForChangePassword = asyncHandler(
 export const changePassword = asyncHandler(async (req, res) => {
 
   const { newPassword, confirmPassword } = req.body;
+
   if (!newPassword || !confirmPassword) {
     console.log("All fields are required!");
     return res.status(400).json(new ApiError(400, "All fields are required!"));
@@ -543,32 +516,24 @@ export const changePassword = asyncHandler(async (req, res) => {
       .status(401)
       .json(new ApiResponse(401, "Invalid or expired token"));
   }
-
+  
   if (!user.forgotPasswordEmailisVerified) {
     return res
       .status(403)
       .json(new ApiResponse(403, "Please verify your email first!"));
   }
 
-  const hashedPassword = await bcrypt.hash(newPassword,10)
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
   await db.user.update({
     where: { id: user.id },
     data: {
       forgotPasswordToken: null,
       forgotPasswordTokenExpiry: null,
       password: hashedPassword,
-      forgotPasswordEmailisVerified:false,
+      forgotPasswordEmailisVerified: false,
     },
   });
 
-  res.status(200).json(
-    new ApiResponse(200, "Password changed successfully!", {
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-      },
-    }),
-  );
-
+  return res.status(200).json(
+  new ApiResponse(200, "Password changed successfully"));
 });

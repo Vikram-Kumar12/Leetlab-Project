@@ -1,10 +1,18 @@
 class ApiError extends Error {
   constructor(statusCode, message = "Something went wrong", errors = [], stack = "") {
     super(message);
+
     this.statusCode = statusCode;
     this.message = message;
     this.success = false;
     this.errors = errors;
+
+    // Logging for debug
+    console.log("🔥 API Error Generated 🔥");
+    console.log("statusCode:", statusCode);
+    console.log("message:", message);
+    console.log("errors:", errors);
+    console.log("stack:", stack);
 
     if (stack) {
       this.stack = stack;
@@ -23,5 +31,4 @@ class ApiError extends Error {
   }
 }
 
-
-export {ApiError};
+export { ApiError };
