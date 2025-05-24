@@ -21,7 +21,7 @@ export const useAuthStore = create((set) => ({
         // ye mera check kar rha hai ki user ka token local-storage mein hai, agr hai token to access do nhi to phir esko login page pr le jao
         set({ authUser: user });
       }
-      localStorage.removeItem("token"); // To remove token from local storage, It basically used when we want to logout.
+      // localStorage.removeItem("token"); // To remove token from local storage, It basically used when we want to logout.
     } catch (error) {
       console.log(
         "Check auth error:",
@@ -87,6 +87,10 @@ export const useAuthStore = create((set) => ({
       console.log("res4", res.data.data.user);
 
       toast.success(res.data.message || "Please verify your email.");
+      // Redirect to sign-in after toast
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
     } catch (error) {
       toast.error(error.response?.data?.message || "forgotPassword failed");
     }

@@ -40,7 +40,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role: UserRole.USER,
+      role: role,
       verificationToken: hashedToken,
       verificationTokenExpiry: new Date(tokenExpiry),
     },

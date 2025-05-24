@@ -6,10 +6,12 @@ import { Loader } from "lucide-react";
 import Home from "../page/Home";
 import LoginPage from "../components/Authentication/LoginPage";
 import SignUpPage from "../components/Authentication/SignUpPage";
-import Test from "../components/Problem/Test";
 import ChangePasswordPage from "../components/Authentication/ChangePasswordPage";
 import ForgotPasswordPage from "../components/Authentication/ForgotPasswordPage";
-
+import Layout from "../components/Layout/Layout";
+import ProblemHomePage from "../components/Problem/ProblemHomePage";
+import AdminRoute from "../components/Layout/AdminRoute";
+import AddProblem from "../components/Problem/AddProblem";
 
 const Routers = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -37,10 +39,15 @@ const Routers = () => {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route
-          path="/problem-section"
-          element={authUser ? <Test /> : <Navigate to={"/signin"} />}
-        />
+        <Route path="/problem-section" element={<Layout />}>
+          <Route
+            index
+            element={
+              authUser ? <ProblemHomePage /> : <Navigate to={"/signin"} />
+            }
+          />
+        </Route>
+
         <Route
           path="/signin"
           element={
@@ -53,18 +60,16 @@ const Routers = () => {
             !authUser ? <SignUpPage /> : <Navigate to={"/problem-section"} />
           }
         />
-        <Route
-          path="/change-password"
-          element={
-            <ChangePasswordPage/>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <ForgotPasswordPage/>
-          }
-        />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+        <Route element={<AdminRoute />}>
+          <Route
+            path="/add-problem"
+            element={authUser ? <AddProblem /> : <Navigate to="/" />}
+          />
+        </Route>
+
       </Routes>
     </div>
   );
