@@ -210,7 +210,6 @@ const LoginPage = () => {
           "Sign in to continue your journey with us. Don't have an account? Create one now."
         }
       />
-
     </div>
   );
 };

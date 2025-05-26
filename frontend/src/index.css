@@ -6,7 +6,7 @@
   /* LeetLab name */
   font-family: 'font1';
   src: url('../public/assets/font1.otf') format('truetype'); 
-  font-weight:700;
+  font-weight:200;
   font-style: normal;
 }
 @font-face {
@@ -20,7 +20,7 @@
   /* used in handing */
   font-family: 'font4';
   src: url('../public/assets/font4.woff') format('truetype'); 
-  font-weight:700;
+  font-weight:100;
   font-style: normal;
 }
 
@@ -33,3 +33,99 @@ html {
 input:focus {
   outline: none;
 }
+
+.navbar-section{
+  background-image: url('/assets/bg1.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.hero-section {
+  background-image: url('/assets/bg1.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.explore-section {
+  background-image: url('/assets/bg2.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* height: full; */
+}
+.product-section {
+  background-image: url('/assets/bg2.svg');
+  background-repeat:no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* height: full; */
+}
+.developer-section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.contact-section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Hide background image below lg (1024px) */
+@media (max-width: 1023px) {
+  .navbar-section {
+    background-image: none;
+  }
+  .hero-section {
+    background-image: none;
+  }
+  .explore-section {
+    background-image: none;
+  }
+  .developer-section {
+    background-image: none;
+  }
+  .product-section {
+    background-image: none;
+  }
+  .contact-section {
+    background-image: none;
+  }
+}
+
+/* Show background image on lg and above */
+@media (min-width: 1024px) {
+  .navbar-section {
+    background-image: url('/assets/bg1.svg');
+  }
+  .hero-section {
+    background-image: url('/assets/bg1.svg');
+  }
+  .explore-section {
+    background-image: url('/assets/bg2.svg');
+  }
+  .product-section {
+    background-image: url('/assets/bg2.svg');
+  }
+  .developer-section {
+    background-image: url('/assets/bg2.svg');
+  }
+  .contact-section {
+    background-image: url('/assets/bg2.svg');
+  }
+}
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+

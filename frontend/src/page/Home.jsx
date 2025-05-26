@@ -5,7 +5,8 @@ import Product from '../components/Home/Product'
 import Developer from '../components/Home/Developer'
 import Hero from '../components/Home/Hero'
 import ContactPage from '../components/ReUseAbleCode/ContactPage'
-import Features from '../components/Home/Features'
+import Marquess from '../components/Home/Marquess'
+// import Features from '../components/Home/Features'
 
 
 const Home = () => {
@@ -15,8 +16,9 @@ const Home = () => {
       <Hero/>
       <Explore/>
       <Product/>
+      <Marquess/>
       <Developer/>
-      <Features/>
+      {/* <Features/> */}
       <ContactPage/>
     </div>
   )

@@ -1,175 +1,171 @@
-import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { ChartBarIcon } from "@heroicons/react/24/solid";
+import AuthImagePattern from "../ReUseAbleCode/AuthImagePattern";
 import Button from "../ReUseAbleCode/Button";
-import { Link } from "react-router";
-const Hero = () => {
-  const [size, setSize] = useState(0);
-  const requestRef = useRef();
-  const speed = 0.02; // Controls how fast it grows (tweak as needed)
 
-  useEffect(() => {
-    const animate = () => {
-      setSize(prev => {
-        let next = prev + speed;
-        if (next >= 5) next = 0; // Reset smoothly to 0 after reaching 5
-        return next;
-      });
+const HeroSection = () => {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
-      requestRef.current = requestAnimationFrame(animate);
-    };
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
-    requestRef.current = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(requestRef.current);
-  }, []);
   return (
+    <section className="hero-section relative w-full max-w-[100vw] px-4 sm:px-6 lg:px-8 overflow-hidden py-12 bg-no-repeat bg-cover bg-center">
+      {/* Animated background elements */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-full overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="absolute top-20 left-10 w-40 h-40 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-20 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/2 w-44 h-44 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      </motion.div>
 
-    <div className="text-white lg:flex lg:items-center lg:justify-center px-4 sm:px-6 lg:px-8 mb-10  py-10">
-      <div className="max-w-7xl lg:mx-auto flex lg:flex-row lg:items-center lg:gap-12 ">
-
-        {/* Left side - Image (hidden on mobile) */}
+      <div className="relative max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between z-10">
+        {/* LEFT CONTENT - Text and buttons */}
         <motion.div
-          className="hidden lg:block flex-1 "
-          initial={{ rotate: -10 }}
-          animate={{ rotate: -10 }}
-          whileHover={{ rotate: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="w-[500px] h-[400px] bg-white flex px-5 py-5 rounded-2xl shadow-2xl items-center justify-center"
-          >
-            <div className="w-[60%] h-full  rounded-l-2xl flex flex-col gap-3 border-2 border-gray-300 overflow-hidden">
-              <div className="w-full h-[27%]  flex gap-3 px-1 py-4 bg-[#F0F4FA] ">
-                <div className="w-[22%] h-full bg-gradient-to-b rounded-md from-blue-300 to-[#12CDEE]"></div>
-                <div className="w-[22%] h-full bg-gradient-to-b rounded-md from-green-300 to-[#97D05A] "></div>
-                <div className="w-[22%] h-full bg-gradient-to-b rounded-md from-yellow-200 to-[#FFC439] "></div>
-                <div className="w-[22%] h-full bg-gradient-to-b rounded-md from-red-200 to-[#FF6768] "></div>
-              </div>
-
-              <div className="w-full h-[60%]  rounded-2xl flex flex-col gap-1 px-2 py-2 ">
-                <div className="w-full h-[20%] bg-white rounded-md flex items-center justify-between px-3 border-[1px] border-gray-400">
-                  <span className="inline-block w-[70%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[15%] h-2 bg-[#d2f1b1] rounded-md"></span>
-                </div>
-                <div className="w-full h-[20%] bg-white rounded-md flex items-center justify-between px-3 border-[1px] border-gray-400">
-                  <span className="inline-block w-[60%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[15%] h-2 bg-[#f0d595] rounded-md"></span>
-                </div>
-                <div className="w-full h-[20%] bg-white rounded-md flex items-center justify-between px-3 border-[1px] border-gray-400">
-                  <span className="inline-block w-[65%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[15%] h-2 bg-[#f0a4a4] rounded-md"></span>
-                </div>
-                <div className="w-full h-[20%] bg-white rounded-md flex items-center justify-between px-3 border-[1px] border-gray-400">
-                  <span className="inline-block w-[50%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[15%] h-2 bg-[#d2f1b1] rounded-md"></span>
-                </div>
-                <div className="w-full h-[20%] bg-white rounded-md flex items-center justify-between px-3 border-[1px] border-gray-400">
-                  <span className="inline-block w-[60%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[15%] h-2 bg-[#f0d595] rounded-md"></span>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-[30%] h-full  rounded-r-2xl  border-2 border-gray-300 overflow-hidden">
-              <div className="w-full h-[50%] flex flex-col gap-5 px-3 py-4 bg-[#F0F4FA]">
-                <div className="w-full h-[30px] bg-gradient-to-b rounded-t-md bg-gray-400"></div>
-                <div className="w-[100px] h-[100px] bg-gradient-to-b rounded-full bg-[#96D1F9] flex items-center justify-center relative mx-auto">
-                  <div
-                    style={{
-                      width: `${size}rem`,
-                      height: `${size}rem`,
-                    }}
-                    className="rounded-full bg-green-600 transition-all duration-300"
-                  ></div>
-                </div>
-              </div>
-
-              <div className="w-full h-[60%]  rounded-2xl flex flex-col gap-5 px-2 py-2 ">
-                <div className="flex flex-col gap-2">
-                  <span className="inline-block w-[70%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[65%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[60%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[55%] h-2 bg-zinc-300 rounded-md"></span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <span className="inline-block w-[80%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[75%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[60%] h-2 bg-zinc-300 rounded-md"></span>
-                  <span className="inline-block w-[50%] h-2 bg-zinc-300 rounded-md"></span>
-                </div>
-              </div>
-              
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Right side - Content (centered on mobile) */}
-        <motion.div
-          className="flex-1 text-center  lg:mt-0 mt-5"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full lg:w-1/2 text-center lg:text-left px-2 sm:px-4 md:px-5"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
           <motion.h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+            className="text-4xl sm:text-5xl lg:text-5xl xl:text-5xl 2xl:text-6xl font-bold tracking-tight text-white"
+            variants={itemVariants}
           >
             <span
               style={{ fontFamily: "font1" }}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+              className="block bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-[#FE9332]"
             >
-              A New Way to Learn
+              Master Coding Interviews{" "}
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
+                With Confidence
+              </span>{" "}
             </span>
           </motion.h1>
 
           <motion.p
-            className="text-lg sm:text-xl lg:text-xl text-gray-400 mb-8 max-w-2xl mx-auto md:mx-0 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-2 max-w-2xl mx-auto lg:mx-0 text-base sm:text-lg md:text-xl text-gray-500"
+            variants={itemVariants}
           >
-            LeetLab is the ultimate platform to enhance your coding skills,
-            deepen your problem-solving abilities, and get interview-ready with
-            hands-on practice.
+            Practice real-world coding questions, track progress, and prepare
+            for{" "}
+            <span
+              style={{ fontFamily: "font4" }}
+              className="text-[#FE9332] font-semibold"
+            >
+              <br className="hidden sm:block" />
+              tech interviews—all in one place
+            </span>
+            .
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex items-center justify-center"
+            className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
+            variants={containerVariants}
           >
-            <Button
-              children="Create Account"
-              to="/signin"
-            />
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-            <Link to="/signin"
-              style={{ fontFamily: "font2" }} 
-              className="block lg:hidden px-8 py-3 bg-gradient-to-r from-blue-400 to-purple-600 text-white font-semibold rounded-lg text-xl shadow-lg"
-            >
-              Create Account
-            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} variants={itemVariants}>
+              <Button to="/problem-section" children="Start Practicing" />
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Button to="/problem-section" children=" Browse Problems" />
             </motion.div>
           </motion.div>
 
+          <motion.div
+            className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start"
+            variants={containerVariants}
+          >
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center px-3 py-2 sm:px-4 sm:py-3 rounded-full bg-gray-800 text-xs sm:text-sm font-medium text-gray-200"
+            >
+              <ChartBarIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-yellow-400" />
+              500+ Coding Problems
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center px-3 py-2 sm:px-4 sm:py-3 rounded-full bg-gray-800 text-xs sm:text-sm font-medium text-gray-200"
+            >
+              <svg
+                className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-purple-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Built with MERN Stack
+            </motion.div>
+          </motion.div>
         </motion.div>
-        
+
+        {/* RIGHT CONTENT - Shows coding illustration OR code editor based on screen size */}
+        <div className="w-full lg:w-1/2 flex flex-col gap-8 mt-8 lg:mt-0">
+          {/* Coding Illustration - Shows on all screens */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center items-center"
+          >
+            <div className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+              <div className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-lg opacity-20"></div>
+              <img
+                src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/programmer.gif"
+                alt="Coding Illustration"
+                className="relative w-full rounded-xl shadow-2xl border-2 border-gray-700"
+              />
+            </div>
+          </motion.div>
+        </div>
       </div>
-    </div>
-    
+
+      <div>
+        {/* Content div with staggered animations */}
+        <motion.div
+          className="mt-12 sm:mt-16 md:mt-20 block lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <AuthImagePattern
+            title={"Welcome to our platform!"}
+            subtitle={
+              "Sign up to access our platform and start using our services."
+            }
+          />
+        </motion.div>
+      </div>
+      
+    </section>
   );
 };
 
-export default Hero;
+export default HeroSection;

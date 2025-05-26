@@ -1,10 +1,8 @@
-import React from "react";
 import Routers from "./utils/Routers";
 const App = () => {
-  let authUser = null;
   return (
-    <div style={{ fontFamily: "font3" }} className="">
-      <Routers/>
+    <div style={{ fontFamily: "font3" }} className="app-section bg-[#FFFFFF] ">
+      <Routers />
     </div>
   );
 };
