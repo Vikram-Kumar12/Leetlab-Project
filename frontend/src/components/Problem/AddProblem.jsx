@@ -3,7 +3,7 @@ import CreateProblemForm from './CreateProblemForm'
 
 const AddProblem = () => {
   return (
-    <div>
+    <div className='bg-slate-900'>
       <CreateProblemForm/>
     </div>
   )

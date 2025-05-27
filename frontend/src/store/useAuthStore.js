@@ -15,7 +15,7 @@ export const useAuthStore = create((set) => ({
 
       const user = res.data.data.user;
 
-      console.log("User data in checkAuth:", user);
+      // console.log("User data in checkAuth:", user);
       // console.log(":Local Storage :", localStorage.getItem("token"));
       if (localStorage.getItem("token") !== null) {
         // ye mera check kar rha hai ki user ka token local-storage mein hai, agr hai token to access do nhi to phir esko login page pr le jao
@@ -55,7 +55,7 @@ export const useAuthStore = create((set) => ({
 
       const user = res.data.data.user; // 🔑 yaha se user object mil raha hai
       const token = res.data.data.accessToken;
-      console.log("User data login :", user);
+      // console.log("User data login :", user);
       // console.log("User token login", token);
 
       // ✅ You can store the token in localStorage or cookies
@@ -84,7 +84,7 @@ export const useAuthStore = create((set) => ({
   forgotPassword: async (data) => {
     try {
       const res = await axiosInstance.post("/auth/forgot-password", data);
-      console.log("res4", res.data.data.user);
+      // console.log("res4", res.data.data.user);
 
       toast.success(res.data.message || "Please verify your email.");
       // Redirect to sign-in after toast
@@ -107,7 +107,7 @@ export const useAuthStore = create((set) => ({
         }
       );
 
-      console.log("res2 :", res);
+      // console.log("res2 :", res);
       toast.success(res.data.message || "Password changed successfully");
 
       // Redirect to sign-in after toast

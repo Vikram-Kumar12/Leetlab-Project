@@ -26,7 +26,7 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={` navbar-section relative  w-full z-50 transition-all py-2 duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}
+      className={`bg-[#FFFFFF] navbar-section relative  w-full z-50 transition-all py-2 duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}
     >
       {/* Animated yellow center light */}
       <div className="absolute inset-0 overflow-hidden">

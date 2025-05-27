@@ -12,6 +12,7 @@ import Layout from "../components/Layout/Layout";
 import ProblemHomePage from "../components/Problem/ProblemHomePage";
 import AdminRoute from "../components/Layout/AdminRoute";
 import AddProblem from "../components/Problem/AddProblem";
+import ProblemPageById from "../components/Problem/ProblemPageById";
 
 const Routers = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -60,8 +61,17 @@ const Routers = () => {
             !authUser ? <SignUpPage /> : <Navigate to={"/problem-section"} />
           }
         />
-        <Route path="/change-password" element={<ChangePasswordPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+        <Route
+          path="/problem/:id"
+          element={
+            authUser ? (
+              <ProblemPageById />
+            ) : (
+              <Navigate to={"/signin"} />
+            )
+          }
+        />
 
         <Route element={<AdminRoute />}>
           <Route
@@ -69,6 +79,10 @@ const Routers = () => {
             element={authUser ? <AddProblem /> : <Navigate to="/" />}
           />
         </Route>
+
+
+        <Route path="/change-password" element={<ChangePasswordPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       </Routes>
     </div>

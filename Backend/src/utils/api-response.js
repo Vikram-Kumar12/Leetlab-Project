@@ -11,6 +11,7 @@ class ApiResponse {
 
         // console.log("statusCode",statusCode);
         console.log("datas :",data);
+        console.log("datas :",data.title);
         console.log("message :",message);
         // console.log("success",success);
         

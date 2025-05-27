@@ -28,7 +28,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-section relative w-full max-w-[100vw] px-4 sm:px-6 lg:px-8 overflow-hidden py-12 bg-no-repeat bg-cover bg-center">
+    <section className="bg-[#FFFFFF] hero-section relative w-full max-w-[100vw] px-4 sm:px-6 lg:px-8 overflow-hidden py-12 bg-no-repeat bg-cover bg-center">
       {/* Animated background elements */}
       <motion.div
         className="absolute top-0 left-0 w-full h-full overflow-hidden"

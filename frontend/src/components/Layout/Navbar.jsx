@@ -10,7 +10,7 @@ const Navbar = ()=>{
 
     const {authUser} = useAuthStore()
 
-    console.log("AUTH_USER",authUser)
+    // console.log("AUTH_USER",authUser)
 
     return (
      <nav className="sticky top-0 z-50 w-full py-5">
@@ -44,9 +44,7 @@ const Navbar = ()=>{
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3"
             >
-              {/* Admin Option */}
-             
-
+              {/* Admin Option */}           
               {/* Common Options */}
               <li>
                 <p className="text-base font-semibold">

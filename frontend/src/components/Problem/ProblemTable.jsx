@@ -1,23 +1,31 @@
 import React, { useState, useMemo } from "react";
 import { useAuthStore } from "../../store/useAuthStore.js";
 import { Link } from "react-router-dom";
-import { Bookmark, PencilIcon, Trash, TrashIcon, Plus } from "lucide-react";
-// import { useActions } from "../store/useAction";
-// import AddToPlaylistModal from "./AddToPlaylist";
-// import CreatePlaylistModal from "./CreatePlaylistModal";
-// import { usePlaylistStore } from "../store/usePlaylistStore";
+import {
+  Bookmark,
+  PencilIcon,
+  Trash,
+  TrashIcon,
+  Plus,
+  Loader2,
+} from "lucide-react";
+import { useActions } from "../../store/useActionStore.js";
+import AddToPlaylist from "./AddToPlaylist.jsx";
+import CreatePlaylistModal from "./CreatePlaylistModal.jsx";
+import { usePlaylistStore } from "../../store/usePlaylistStore.js";
 
 const ProblemsTable = ({ problems }) => {
   const { authUser } = useAuthStore();
-    // const { onDeleteProblem } = useActions();
-    // const { createPlaylist } = usePlaylistStore();
+  const { isDeletingProblem, onDeleteProblem } = useActions();
+  const { createPlaylist } = usePlaylistStore();
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("ALL");
   const [selectedTag, setSelectedTag] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
-    // const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    // const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] = useState(false);
-    // const [selectedProblemId, setSelectedProblemId] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
+    useState(false);
+  const [selectedProblemId, setSelectedProblemId] = useState(null);
 
   // Extract all unique tags from problems
   const allTags = useMemo(() => {
@@ -31,9 +39,10 @@ const ProblemsTable = ({ problems }) => {
   const difficulties = ["ESAY", "MEDIUM", "HARD"];
 
   // Filter problems based on search, difficulty, and tags
-    const filteredProblems = useMemo(() => {
-      return (problems || [])
-      // ham aaha searching kar rhe hai 
+  const filteredProblems = useMemo(() => {
+    return (
+      (problems || [])
+        // ham aaha searching kar rhe hai
         .filter((problem) =>
           problem.title.toLowerCase().includes(search.toLowerCase())
         )
@@ -42,40 +51,41 @@ const ProblemsTable = ({ problems }) => {
         )
         .filter((problem) =>
           selectedTag === "ALL" ? true : problem.tags?.includes(selectedTag)
-        );
-    }, [problems, search, difficulty, selectedTag]);
+        )
+    );
+  }, [problems, search, difficulty, selectedTag]);
 
   // Pagination logic, kahne ka mtlb hai ki ham ak page mein kitna problem show karwa rhe hai, and ki koi user agr filter kiya hai to usko kitna information show karwa rhe hai, sara information nhi show karwana hai. ham esko scroller rendering se impelement kar sakte hai.
-    const itemsPerPage = 5;
-    const totalPages = Math.ceil(filteredProblems.length / itemsPerPage);
-    const paginatedProblems = useMemo(() => {
-      return filteredProblems.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      );
-    }, [filteredProblems, currentPage]);
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(filteredProblems.length / itemsPerPage);
+  const paginatedProblems = useMemo(() => {
+    return filteredProblems.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [filteredProblems, currentPage]);
 
-    const handleDelete = (id) => {
-      onDeleteProblem(id);
-    };
+  const handleDelete = (id) => {
+    onDeleteProblem(id);
+  };
 
-    // const handleCreatePlaylist = async (data) => {
-    //   await createPlaylist(data);
-    // };
+  const handleCreatePlaylist = async (data) => {
+    await createPlaylist(data);
+  };
 
-    const handleAddToPlaylist = (problemId) => {
-      setSelectedProblemId(problemId);
-      setIsAddToPlaylistModalOpen(true);
-    };
+  const handleAddToPlaylist = (problemId) => {
+    setSelectedProblemId(problemId);
+    setIsAddToPlaylistModalOpen(true);
+  };
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-10">
+    <div className="w-full max-w-6xl mx-auto mt-10 bg-slate-900">
       {/* Header with Create Playlist Button */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Problems</h2>
         <button
           className="btn btn-primary gap-2"
-          //   onClick={() => setIsCreateModalOpen(true)}
+            onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="w-4 h-4" />
           Create Playlist
@@ -189,7 +199,11 @@ const ProblemsTable = ({ problems }) => {
                               onClick={() => handleDelete(problem.id)}
                               className="btn btn-sm btn-error"
                             >
-                              <TrashIcon className="w-4 h-4 text-white" />
+                              {isDeletingProblem ? (
+                                <Loader2 className="animate-spin w-4 h-4" />
+                              ) : (
+                                <TrashIcon className="w-4 h-4 text-white" />
+                              )}
                             </button>
                             <button disabled className="btn btn-sm btn-warning">
                               <PencilIcon className="w-4 h-4 text-white" />
@@ -243,17 +257,17 @@ const ProblemsTable = ({ problems }) => {
       </div>
 
       {/* Modals */}
-      {/* <CreatePlaylistModal
+      <CreatePlaylistModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onSubmit={handleCreatePlaylist}
-      /> */}
+      />
 
-      {/* <AddToPlaylistModal
+      <AddToPlaylist
         isOpen={isAddToPlaylistModalOpen}
         onClose={() => setIsAddToPlaylistModalOpen(false)}
         problemId={selectedProblemId}
-      /> */}
+      />
     </div>
   );
 };

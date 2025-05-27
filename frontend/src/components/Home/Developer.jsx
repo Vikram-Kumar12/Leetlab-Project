@@ -59,7 +59,7 @@ function Developer() {
   ];
 
   return (
-    <div className="developer-section w-full flex flex-col md:flex-row items-center justify-between gap-8 px-4 md:px-16 py-12 ">
+    <div className="bg-[#FFFFFF] developer-section w-full flex flex-col md:flex-row items-center justify-between gap-8 px-4 md:px-16 py-12 ">
 
       {/* left-side content */}
       <motion.div

@@ -25,9 +25,9 @@ const ForgotPasswordPage = () => {
   const onSubmit = async (data) => {
     try {
       await forgotPassword(data);
-      console.log("forgotPassword data :", data);
+      // console.log("forgotPassword data :", data);
     } catch (error) {
-      console.error("forgotPassword error :", error);
+      // console.error("forgotPassword error :", error);
     }
   };
 
@@ -105,17 +105,8 @@ const ForgotPasswordPage = () => {
               }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"
-              //   disabled={isLoggingIn}
+              className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"              
             >
-              {/* {isLoggingIn ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                "Sign in"
-              )} */}
               Submit
             </motion.button>
           </form>

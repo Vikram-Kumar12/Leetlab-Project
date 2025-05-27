@@ -143,10 +143,31 @@ export const updateProblem = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const problem = await db.problem.findUnique({
-    where: { id: id },
+    where: { id },
   });
+
   if (!problem) {
     return res.status(404).json(new ApiError(404, "Problem not found!"));
+  }
+
+  // ✅ Check if user is ADMIN
+  if (req.user.role !== "ADMIN") {
+    return res.status(403).json(
+      new ApiError(
+        403,
+        "You are not allowed to update a problem. Only admins can perform this action!"
+      )
+    );
+  }
+
+  // ✅ Check if this admin is the creator
+  if (problem.userId !== req.user.id) {
+    return res.status(403).json(
+      new ApiError(
+        403,
+        "You can only update problems created by you."
+      )
+    );
   }
 
   const {
@@ -161,23 +182,13 @@ export const updateProblem = asyncHandler(async (req, res) => {
     referenceSolution,
   } = req.body;
 
-  if (req.user.role !== "ADMIN") {
-    return res
-      .status(403)
-      .json(
-        new ApiError(
-          400,
-          "You are not allowed to create a problem , only a admin create a problem!",
-        ),
-      );
-  }
-
+  // ✅ Validate each language solution
   for (const [language, solutionCode] of Object.entries(referenceSolution)) {
     const languageId = getJudge0LanguageId(language);
     if (!languageId) {
-      return res
-        .status(400)
-        .json(new ApiError(400, `Language ${language} is not supported`));
+      return res.status(400).json(
+        new ApiError(400, `Language ${language} is not supported`)
+      );
     }
 
     const submissions = testcases.map(({ input, output }) => ({
@@ -193,7 +204,6 @@ export const updateProblem = asyncHandler(async (req, res) => {
 
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
-      console.log("Result-----", result);
       if (result.status.id !== 3) {
         return res.status(400).json({
           error: `Testcase ${i + 1} failed for language ${language}`,
@@ -214,13 +224,13 @@ export const updateProblem = asyncHandler(async (req, res) => {
       testcases,
       codeSnippets,
       referenceSolution,
-      userId: req.user.id,
+      userId: req.user.id, // Optional: only if you want to update creator (usually not needed)
     },
   });
 
-  return res
-    .status(201)
-    .json(new ApiResponse(200, "Problem Updated Successfully", newProblem));
+  return res.status(200).json(
+    new ApiResponse(200, "Problem Updated Successfully", newProblem)
+  );
 });
 
 export const deleteProblem = asyncHandler(async (req, res) => {
@@ -244,11 +254,21 @@ export const deleteProblem = asyncHandler(async (req, res) => {
       );
   }
 
+  // ✅ Check if the logged-in admin is the creator of this problem
+  if (problem.userId !== req.user.id) {
+    return res.status(403).json(
+      new ApiError(
+        403,
+        "You can only delete problems created by you."
+      )
+    );
+  }
+
   await db.problem.delete({
     where: { id },
   });
 
-  return res.status(204)
+  return res.status(200)
     .json(
       new ApiResponse(204, "Problem Deleted Successfully")
     );

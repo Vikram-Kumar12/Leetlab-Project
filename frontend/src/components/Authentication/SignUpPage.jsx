@@ -18,8 +18,6 @@ const SignUpSchema = z.object({
   role: z.enum(["USER", "ADMIN"]),
 });
 
-
-
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,16 +36,16 @@ const SignUpPage = () => {
   const onSubmit = async (data) => {
     try {
       await signup(data)
-      console.log("Signup data : ", data);
+      // console.log("Signup data : ", data);
       reset(); // ⬅️ form fields ko empty karne ke liye
       navigate('/signin')
     } catch (error) {
-      console.error("Signup time error",error)
+      // console.error("Signup time error",error)
     }
   };
 
   return (
-    <div className="lg:min-h-screen grid lg:grid-cols-2 bg-slate-900 ">
+    <div className="min:h-screen lg:h-full 2xl:h-screen  grid lg:grid-cols-2 bg-slate-900 ">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">
           

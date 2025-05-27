@@ -4,6 +4,6 @@ import { executeCode } from '../controllers/executeCode.controllers.js';
 
 const executionRoute = express.Router();
 
-executionRoute.post("/",isLoggedIn,executeCode)
+executionRoute.post("",isLoggedIn,executeCode)
 
 export default executionRoute;

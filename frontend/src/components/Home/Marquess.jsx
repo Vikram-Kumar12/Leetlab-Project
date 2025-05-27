@@ -8,7 +8,7 @@ function Marquess() {
   );
 
   return (
-    <div className="mt-10 marquess-section py-10 w-full relative overflow-hidden px-4 lg:px-15">
+    <div className="bg-[#FFFFFF] pt-10 marquess-section py-10 w-full relative overflow-hidden px-4 lg:px-15">
       <Marques imagesUrl={imageGroup1} direction="left" />
     </div>
   );

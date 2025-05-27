@@ -152,7 +152,7 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="contact-section mt-20  w-full pb-20 pt-10 px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#FFFFFF] contact-section   w-full pb-20 pt-20 px-4 sm:px-6 lg:px-8">
       <div
         style={{ fontFamily: "font1" }}
         className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16"

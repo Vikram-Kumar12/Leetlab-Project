@@ -30,14 +30,14 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       await login(data);
-      console.log("Login data :",data)
+      // console.log("Login data :",data)
     } catch (error) {
-      console.error("Login error :",error)
+      // console.error("Login error :",error)
     }
   };
 
   return (
-    <div className="lg:h-screen grid lg:grid-cols-2 bg-slate-900">
+    <div className="md:h-screen lg:h-full 2xl:h-screen grid lg:grid-cols-2 bg-slate-900">
       <div className="flex flex-col  items-center px-3 sm:px-6 py-10 lg:p-12 lg:py-25 ">
 
         <div className="w-full max-w-md space-y-8 ">

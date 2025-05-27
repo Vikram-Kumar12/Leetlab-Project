@@ -27,9 +27,9 @@
 html {
   scroll-behavior: smooth;
 }
-* {
+/* * {
   user-select: none;
-}
+} */
 input:focus {
   outline: none;
 }
@@ -65,11 +65,7 @@ input:focus {
   background-size: cover;
   background-position: center;
 }
-.contact-section {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
+
 
 /* Hide background image below lg (1024px) */
 @media (max-width: 1023px) {
@@ -86,9 +82,6 @@ input:focus {
     background-image: none;
   }
   .product-section {
-    background-image: none;
-  }
-  .contact-section {
     background-image: none;
   }
 }
@@ -108,9 +101,6 @@ input:focus {
     background-image: url('/assets/bg2.svg');
   }
   .developer-section {
-    background-image: url('/assets/bg2.svg');
-  }
-  .contact-section {
     background-image: url('/assets/bg2.svg');
   }
 }

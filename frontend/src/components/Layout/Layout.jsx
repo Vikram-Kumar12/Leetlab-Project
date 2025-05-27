@@ -4,7 +4,7 @@ import { Outlet } from 'react-router'
 
 const Layout = () => {
   return (
-    <div>
+    <div className='bg-slate-900'>
         <Navbar/>
         <Outlet/>
     </div>

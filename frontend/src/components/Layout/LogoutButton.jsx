@@ -9,9 +9,6 @@ const LogoutButton = ({children})=>{
         await logout();
         
     }
-
-
-
     return (
         <button className="btn btn-primary" onClick={onLogout}> 
             {children}

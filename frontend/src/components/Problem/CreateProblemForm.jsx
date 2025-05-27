@@ -562,17 +562,17 @@ const CreateProblemForm = () => {
   const [isLoading , setIsLoading] = useState(false);
 
   const onSubmit = async (value)=>{
-    console.log("Value :",value);
+    // console.log("Value :",value);
     
    try {
     setIsLoading(true)
     const res = await axiosInstance.post("/problems/create-problem" , value)
-    console.log(res.data);
+    // console.log(res.data);
     toast.success(res.data.message || "Problem Created successfully⚡");
     navigation("/problem-section");
 
    } catch (error) {
-    console.log(error);
+    // console.log(error);
     toast.error("Error creating problem")
    }
    finally{
@@ -591,7 +591,7 @@ const CreateProblemForm = () => {
 }
 
   return (
-    <div className='container mx-auto py-8 px-4 max-w-7xl'>
+    <div className='container mx-auto py-8 px-4 max-w-7xl bg-slate-900'>
   <div className="card bg-base-100 shadow-xl">
         <div className="card-body p-6 md:p-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 pb-4 border-b">

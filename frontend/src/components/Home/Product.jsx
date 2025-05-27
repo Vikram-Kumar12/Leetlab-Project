@@ -104,14 +104,14 @@ const products = [
 
 const Product = () => {
   return (
-    <section className="product-section w-full bg-gradient-to-b" id="product">
+    <section className="bg-[#FFFFFF] product-section w-full bg-gradient-to-b" id="product">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 xl:py-24 2xl:py-28">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-12 sm:mb-16 lg:mb-20 xl:mb-24"
+          className=" mb-12 sm:mb-16 lg:mb-20 xl:mb-24"
         >
           <h2
             style={{ fontFamily: "font1" }}
@@ -120,7 +120,7 @@ const Product = () => {
             Developer Experience{" "}
             <span className="text-white dark:text-transparent">Redefined</span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-xl xl:text-xl 2xl:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4 sm:px-0">
+          <p className=" sm:text-lg md:text-xl lg:text-xl xl:text-xl 2xl:text-xl text-gray-600 dark:text-gray-300  mx-auto px-4 sm:px-0">
             Everything you need to go from beginner to interview-ready in one
             powerful platform
           </p>

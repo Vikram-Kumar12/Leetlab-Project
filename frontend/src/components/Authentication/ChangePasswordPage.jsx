@@ -43,9 +43,9 @@ const ChangePasswordPage = () => {
 
     try {
       await changePassword(payload); // ✅ final correct data object
-      console.log("changePassword data frontend : ", payload);
+      // console.log("changePassword data frontend : ", payload);
     } catch (error) {
-      console.error("changePassword error frontend:", error);
+      // console.error("changePassword error frontend:", error);
     }
   };
 
@@ -74,13 +74,6 @@ const ChangePasswordPage = () => {
                   </span>
                 </motion.div>
               </div>
-
-              {/* <h1
-                style={{ fontFamily: "font4" }}
-                className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600 "
-              >
-                Welcome Back
-              </h1> */}
               <p
                 style={{ fontFamily: "font4" }}
                 className="text-base-content/60 mt-5"
@@ -189,16 +182,7 @@ const ChangePasswordPage = () => {
               whileTap={{ scale: 0.95 }}
               type="submit"
               className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"
-              //   disabled={isLoggingIn}
             >
-              {/* {isLoggingIn ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                "Sign in"
-              )} */}
               Change-Password
             </motion.button>
           </form>

@@ -135,7 +135,7 @@ helloWorld();`,
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 4 }}
-      className="explore-section w-full px-4 sm:px-6 lg:px-8 py-8 lg:pt-12 mb-10"
+      className="bg-[#FFFFFF] explore-section w-full px-4 sm:px-6 lg:px-8 py-8 lg:pt-12 "
     >
       <div className=" max-w-7xl mx-auto">
         
