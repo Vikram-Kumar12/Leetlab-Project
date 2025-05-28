@@ -97,7 +97,7 @@ export const useAuthStore = create((set) => ({
   },
 
   changePassword: async (data) => {
-    console.log("data :", data);
+    // console.log("data :", data);
     try {
       const res = await axiosInstance.post(
         `/auth/changed-password/${data.token}`,

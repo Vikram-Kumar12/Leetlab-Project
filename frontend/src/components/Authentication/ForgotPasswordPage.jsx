@@ -25,71 +25,68 @@ const ForgotPasswordPage = () => {
   const onSubmit = async (data) => {
     try {
       await forgotPassword(data);
-      // console.log("forgotPassword data :", data);
+      console.log("forgotPassword data :", data);
     } catch (error) {
-      // console.error("forgotPassword error :", error);
+      console.error("forgotPassword error :", error);
     }
   };
 
   return (
-    <div className="lg:h-screen grid lg:grid-cols-2 bg-slate-900">
-      <div className="flex flex-col  items-center px-3 sm:px-6 py-10 lg:p-12 lg:py-25 ">
-        <div className="w-full max-w-md space-y-8 ">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-2 group">
-              {/* logo and name */}
-              <div className="flex-shrink-0 flex items-center">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex items-center space-x-2 cursor-pointer  "
-                >
-                  <div className=" bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <img src={logo} alt="image" className="w-[3rem] h-[3rem]" />
-                  </div>
-                  <span
-                    style={{ fontFamily: "font4" }}
-                    className="inline-block text-4xl font-bold white ml-1 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
-                  >
-                    LeetLab
-                  </span>
-                </motion.div>
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-slate-900">
+      {/* Left Side: Form */}
+      <div className="flex flex-col justify-center items-center px-4 sm:px-6 md:px-10 py-10 lg:py-20   ">
+        <div className="w-full max-w-md space-y-10 bg-white/10 backdrop-blur-sm  rounded-xl px-5 py-5 border border-white/20 shadow-lg">
+          {/* Logo and Title */}
+          <div className="text-center">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center justify-center space-x-3 mb-4"
+            >
+              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-2">
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="w-12 h-12 sm:w-14 sm:h-14"
+                />
               </div>
-
-              <h1
+              <span
                 style={{ fontFamily: "font4" }}
-                className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600 "
+                className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
               >
-                Change your password
-              </h1>
-            </div>
+                LeetLab
+              </span>
+            </motion.div>
+            <h1
+              style={{ fontFamily: "font4" }}
+              className="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600"
+            >
+              Change your password
+            </h1>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="">
-            {/* Email */}
-            <div className="form-control mb-6">
-              <label style={{ fontFamily: "font4" }} className="label">
-                <span className="label-text font-medium text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600 mb-1">
-                  Email
-                </span>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Email Field */}
+            <div>
+              <label
+                style={{ fontFamily: "font4" }}
+                className="block text-lg sm:text-xl font-medium mb-1 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600"
+              >
+                Email
               </label>
-
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
-                </div>
-
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <Mail className="h-5 w-5" />
+                </span>
                 <input
                   type="email"
                   {...register("email")}
-                  className={`input input-bordered w-full h-[55px] pl-10 text-lg ${
+                  className={`input input-bordered w-full h-[50px] pl-10 text-base sm:text-lg ${
                     errors.email ? "input-error" : ""
                   }`}
                   placeholder="you@example.com"
                 />
               </div>
-
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.email.message}
@@ -99,13 +96,10 @@ const ForgotPasswordPage = () => {
 
             {/* Submit Button */}
             <motion.button
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"              
+              className="w-full py-3 text-lg sm:text-xl rounded-md bg-gradient-to-r from-blue-400 to-purple-600 text-white"
             >
               Submit
             </motion.button>
@@ -113,9 +107,12 @@ const ForgotPasswordPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Image/Pattern */}
-      <AuthImagePattern />
-      
+      {/* Right Side: Always Visible */}
+      <div className="flex items-center justify-center px-4 py-10 sm:py-16  ">
+        <div className="w-full max-w-[600px]">
+          <AuthImagePattern />
+        </div>
+      </div>
     </div>
   );
 };

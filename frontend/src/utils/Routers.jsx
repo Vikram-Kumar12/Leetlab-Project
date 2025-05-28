@@ -22,8 +22,10 @@ const Routers = () => {
   // console.log("isCheckingAuth :", isCheckingAuth);
 
   useEffect(() => {
-    // Only check auth if it's not already loaded,  if you always want to check once per load ki user ke pas token hai aa nhi mtlb login hai aa nhi.
+    // const token = localStorage.getItem("token");
+    // if (token) {
     checkAuth();
+    // }
   }, []);
 
   if (isCheckingAuth && !authUser) {
@@ -64,13 +66,7 @@ const Routers = () => {
 
         <Route
           path="/problem/:id"
-          element={
-            authUser ? (
-              <ProblemPageById />
-            ) : (
-              <Navigate to={"/signin"} />
-            )
-          }
+          element={authUser ? <ProblemPageById /> : <Navigate to={"/signin"} />}
         />
 
         <Route element={<AdminRoute />}>
@@ -80,10 +76,8 @@ const Routers = () => {
           />
         </Route>
 
-
-        <Route path="/change-password" element={<ChangePasswordPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-
+        <Route path="/change-password" element={<ChangePasswordPage />} />
       </Routes>
     </div>
   );

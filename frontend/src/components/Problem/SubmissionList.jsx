@@ -8,8 +8,12 @@ import {
 
 const SubmissionsList = ({ submissions, isLoading }) => {
   // Helper function to safely parse JSON strings
-  const safeParse = (data) => {
+  const safeParse = (submissions) => {
+    // console.log("data comes :",submissions);
+    
     try {
+      // console.log("Hello");
+      
       return JSON.parse(data);
     } catch (error) {
       // console.error("Error parsing data:", error);
@@ -19,6 +23,9 @@ const SubmissionsList = ({ submissions, isLoading }) => {
 
   // Helper function to calculate average memory usage
   const calculateAverageMemory = (memoryData) => {
+    // console.log("Hello2");
+    // console.log("memory data",memoryData);
+    
     const memoryArray = safeParse(memoryData).map((m) =>
       parseFloat(m.split(" ")[0])
     );

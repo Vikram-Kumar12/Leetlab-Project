@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff,  Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { z } from "zod";
 import AuthImagePattern from "../ReUseAbleCode/AuthImagePattern";
 import logo from "../../../public/logo.png";
@@ -17,7 +17,6 @@ const ChangePasswordSchema = z.object({
 });
 
 const ChangePasswordPage = () => {
-
   const { changePassword } = useAuthStore();
   const [newShowPassword, newSetShowPassword] = useState(false);
   const [confermShowPassword, confermSetShowPassword] = useState(false);
@@ -50,20 +49,19 @@ const ChangePasswordPage = () => {
   };
 
   return (
-    <div className="lg:h-screen grid lg:grid-cols-2 bg-slate-900">
-      <div className="flex flex-col  items-center px-3 sm:px-6 py-10 lg:p-12 lg:py-25 ">
-        <div className="w-full max-w-md space-y-8 ">
-
+    <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-2 bg-slate-900">
+      {/* Left Side - Form */}
+      <div className="flex flex-col items-center px-3 sm:px-6 py-10 lg:p-12">
+        <div className="w-full max-w-md space-y-8">
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              {/* logo and name */}
               <div className="flex-shrink-0 flex items-center">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center space-x-2 cursor-pointer  "
+                  className="flex items-center space-x-2 cursor-pointer"
                 >
-                  <div className=" bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                     <img src={logo} alt="image" className="w-[3rem] h-[3rem]" />
                   </div>
                   <span
@@ -85,7 +83,7 @@ const ChangePasswordPage = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="">
-            {/* new password */}
+            {/* New Password */}
             <div className="form-control mb-1">
               <label className="label">
                 <span
@@ -95,20 +93,19 @@ const ChangePasswordPage = () => {
                   New Password
                 </span>
               </label>
-
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Lock className="h-5 w-5 text-base-content/40" />
                 </div>
-
                 <input
-                  type={newShowPassword ? "text" : "newPassword"}
+                  type={newShowPassword ? "text" : "password"} // fixed
                   {...register("newPassword")}
                   className={`input input-bordered w-full h-[55px] pl-10 text-lg ${
                     errors.newPassword ? "input-error" : ""
                   }`}
                   placeholder="••••••••"
                 />
+
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
@@ -121,7 +118,6 @@ const ChangePasswordPage = () => {
                   )}
                 </button>
               </div>
-
               {errors.newPassword && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.newPassword.message}
@@ -139,20 +135,19 @@ const ChangePasswordPage = () => {
                   Confirm Password
                 </span>
               </label>
-
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Lock className="h-5 w-5 text-base-content/40" />
                 </div>
-
                 <input
-                  type={confermShowPassword ? "text" : "confirmPassword"}
+                  type={confermShowPassword ? "text" : "password"} // fixed
                   {...register("confirmPassword")}
                   className={`input input-bordered w-full h-[55px] pl-10 text-lg ${
                     errors.confirmPassword ? "input-error" : ""
                   }`}
                   placeholder="••••••••"
                 />
+
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
@@ -165,7 +160,6 @@ const ChangePasswordPage = () => {
                   )}
                 </button>
               </div>
-
               {errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.confirmPassword.message}
@@ -175,13 +169,10 @@ const ChangePasswordPage = () => {
 
             {/* Submit Button */}
             <motion.button
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="px-10 py-2 rounded-md text-2xl  bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"
+              className="px-10 py-2 rounded-md text-2xl bg-gradient-to-r from-blue-400 to-purple-600 cursor-pointer"
             >
               Change-Password
             </motion.button>
@@ -189,14 +180,13 @@ const ChangePasswordPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Image/Pattern */}
-      <AuthImagePattern
-        title={"Welcome Back!"}
-        subtitle={
-          "Sign in to continue your journey with us. Don't have an account? Create one now."
-        }
-      />
-      
+      {/* Right Side */}
+      <div className="flex items-center justify-center p-6 lg:p-12">
+        <AuthImagePattern
+          title="Welcome Back!"
+          subtitle="Sign in to continue your journey with us. Don't have an account? Create one now."
+        />
+      </div>
     </div>
   );
 };

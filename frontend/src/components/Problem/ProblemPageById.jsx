@@ -23,7 +23,7 @@ import { useExecutionStore } from "../../store/useExecutionStore.js";
 import { useSubmissionStore } from "../../store/useSubmissionStore.js";
 import Submission from "./Submission.jsx";
 import SubmissionsList from "./SubmissionList.jsx";
-
+import Button from "../ReUseAbleCode/Button.jsx"
 const ProblemPageById = () => {
   const { id } = useParams();
   const { getProblemById, problem, isProblemLoading } = useProblemStore();
@@ -105,11 +105,14 @@ const ProblemPageById = () => {
       case "description":
         return (
           <div className="prose max-w-none">
-            <p className="text-lg mb-6">{problem.description}</p>
 
+            {/* description */}
+            <p className="text-lg mb-6  bg-gradient-to-r from-zinc-700 via-black to-[#eb9e56] rounded-md px-2 py-2 ">{problem.description}</p>
+
+            {/* example, input, output, explanation */}
             {problem.examples && (
               <>
-                <h3 className="text-xl font-bold mb-4">Examples:</h3>
+                <h3  className="text-xl font-bold mb-4 text-[#FFD580]">Examples:</h3>
                 {Object.entries(problem.examples).map(
                   ([lang, example], idx) => (
                     <div
@@ -117,24 +120,21 @@ const ProblemPageById = () => {
                       className="bg-base-200 p-6 rounded-xl mb-6 font-mono"
                     >
                       <div className="mb-4">
-                        <div className="text-indigo-300 mb-2 text-base font-semibold">
-                          Input:
+                        <div className="text-indigo-300 mb-2  font-semibold text-xl">
+                          Input: <span className="text-white font-semibold text-lg">{example.input}</span>
                         </div>
-                        <span className="bg-black/90 px-4 py-1 rounded-lg font-semibold text-white">
-                          {example.input}
-                        </span>
                       </div>
                       <div className="mb-4">
-                        <div className="text-indigo-300 mb-2 text-base font-semibold">
-                          Output:
-                        </div>
-                        <span className="bg-black/90 px-4 py-1 rounded-lg font-semibold text-white">
+                        <div className="text-indigo-300 mb-2 text-xl font-semibold">
+                          Output: <span className="text-lg font-semibold text-white">
                           {example.output}
                         </span>
+                        </div>
+                        
                       </div>
                       {example.explanation && (
                         <div>
-                          <div className="text-emerald-300 mb-2 text-base font-semibold">
+                          <div className="text-emerald-300 mb-2 text-xl font-semibold">
                             Explanation:
                           </div>
                           <p className="text-base-content/70 text-lg font-sem">
@@ -148,11 +148,12 @@ const ProblemPageById = () => {
               </>
             )}
 
+            {/* Constraints */}
             {problem.constraints && (
               <>
-                <h3 className="text-xl font-bold mb-4">Constraints:</h3>
-                <div className="bg-base-200 p-6 rounded-xl mb-6">
-                  <span className="bg-black/90 px-4 py-1 rounded-lg font-semibold text-white text-lg">
+                <h3 style={{ fontFamily: "font4" }} className="text-xl font-bold mb-4 text-[#FFD580]">Constraints:</h3>
+                <div className="bg-base-200 px-3 py-4 rounded-xl mb-6">
+                  <span className=" px-4 py-1 rounded-lg font-semibold text-white text-lg">
                     {problem.constraints}
                   </span>
                 </div>
@@ -195,17 +196,26 @@ const ProblemPageById = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 max-w-7xl w-full">
-      <nav className="navbar bg-base-100 shadow-lg px-4">
-        <div className="flex-1 gap-2">
-          <Link to={"/problem-section"} className="flex items-center gap-2 text-primary">
+    <div className="w-full max-w-7xl mx-auto py-5 px-1 bg-slate-900">
+
+      {/* Navbar */}
+      <nav className="navbar shadow-lg px-4 py-3 bg-[#8E7353] flex flex-wrap items-start gap-4 transition-all duration-300 ease-in-out rounded-md">
+        <div className="flex-1 min-w-[280px]">
+          <Link
+            to={"/problem-section"}
+            className="flex items-center gap-2 text-[#F5F5F5] hover:text-white transition duration-300"
+          >
             <Home className="w-6 h-6" />
             <ChevronRight className="w-4 h-4" />
           </Link>
-          <div className="mt-2">
-            <h1 className="text-xl font-bold">{problem.title}</h1>
-            <div className="flex items-center gap-2 text-sm text-base-content/70 mt-5">
-              <Clock className="w-4 h-4" />
+
+          <div className="mt-3">
+            <h1 style={{ fontFamily: "font4" }} className="text-lg md:text-xl font-bold text-[#FFD580] transition duration-300">
+              {problem.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-2 text-sm text-[C6B6A5] mt-4">
+              <Clock className="w-4 h-4 text-[#FFD580]" />
               <span>
                 Updated{" "}
                 {new Date(problem.createdAt).toLocaleString("en-US", {
@@ -214,29 +224,37 @@ const ProblemPageById = () => {
                   day: "numeric",
                 })}
               </span>
-              <span className="text-base-content/30">•</span>
-              <Users className="w-4 h-4" />
-              <span>{submissionCount} Submissions</span>
-              <span className="text-base-content/30">•</span>
-              <ThumbsUp className="w-4 h-4" />
-              <span>95% Success Rate</span>
+
+              <span className="text-white/30 hidden sm:inline">•</span>
+              <Users className="w-4 h-4 hidden sm:inline text-[#FFD580]" />
+              <span className="hidden sm:inline">
+                {submissionCount} Submissions
+              </span>
+
+              <span className="text-white/30 hidden md:inline">•</span>
+              <ThumbsUp className="w-4 h-4 hidden md:inline text-[#FFD580]" />
+              <span className="hidden md:inline">95% Success Rate</span>
             </div>
           </div>
         </div>
-        <div className="flex-none gap-4">
+
+        <div className="flex gap-3 items-center min-w-[200px] justify-end flex-wrap">
           <button
-            className={`btn btn-ghost btn-circle ${
-              isBookmarked ? "text-primary" : ""
+            className={`btn btn-circle bg-[#8E7353] border-none hover:scale-110 hover:bg-[#9e876a] duration-200 ${
+              isBookmarked ? "text-primary" : "text-white "
             }`}
             onClick={() => setIsBookmarked(!isBookmarked)}
           >
-            <Bookmark className="w-5 h-5" />
+            <Bookmark className="w-5 h-5 text-[#FFD580]" />
           </button>
-          <button className="btn btn-ghost btn-circle">
-            <Share2 className="w-5 h-5" />
+
+          <button className="btn btn-circle bg-[#8E7353] border-none hover:scale-110 hover:bg-[#9e876a] duration-200">
+            <Share2 className="w-5 h-5 text-[#FFD580]" />
           </button>
+
           <select
-            className="select select-bordered select-primary w-40"
+          // select select-bordered select-primary w-36 md:w-40 transition-all duration-300
+            className="bg-slate-900 outline-none w-36 md:w-40 h-10 rounded text-[#FFD580] px-1"
             value={selectedLanguage}
             onChange={handleLanguageChange}
           >
@@ -249,27 +267,32 @@ const ProblemPageById = () => {
         </div>
       </nav>
 
-      <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="card bg-base-100 shadow-xl">
+      <div className="container mx-auto py-4">
+
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[1.5fr_2.5fr] gap-1 bg-red-300">
+
+          {/* All information like, discription, example, etc */}
+          <div className="shadow-xl bg-[#8E7353] rounded-xl">
             <div className="card-body p-0">
+
+              {/* icon :  description, submission, discussion, hints*/}
               <div className="tabs tabs-bordered">
                 <button
-                  className={`tab gap-2 ${
+                  className={`tab gap-2 text-white ${
                     activeTab === "description" ? "tab-active" : ""
                   }`}
                   onClick={() => setActiveTab("description")}
                 >
-                  <FileText className="w-4 h-4" />
+                  <FileText className="w-4 h-4 text-[#FFD580]" />
                   Description
                 </button>
                 <button
-                  className={`tab gap-2 ${
+                  className={`tab gap-2 text-white ${
                     activeTab === "submissions" ? "tab-active" : ""
                   }`}
                   onClick={() => setActiveTab("submissions")}
                 >
-                  <Code2 className="w-4 h-4" />
+                  <Code2 className="w-4 h-4 text-[#FFD580]" />
                   Submissions
                 </button>
                 <button
@@ -278,7 +301,7 @@ const ProblemPageById = () => {
                   }`}
                   onClick={() => setActiveTab("discussion")}
                 >
-                  <MessageSquare className="w-4 h-4" />
+                  <MessageSquare className="w-4 h-4 text-[#FFD580]" />
                   Discussion
                 </button>
                 <button
@@ -287,29 +310,32 @@ const ProblemPageById = () => {
                   }`}
                   onClick={() => setActiveTab("hints")}
                 >
-                  <Lightbulb className="w-4 h-4" />
+                  <Lightbulb className="w-4 h-4 text-[#FFD580]" />
                   Hints
                 </button>
               </div>
 
-              <div className="p-6">{renderTabContent()}</div>
+              <div className="px-2 ">{renderTabContent()}</div>
             </div>
           </div>
 
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body p-0">
+          {/* Code-Editor and run, submit button */}
+          <div className="h-fit  shadow-xl bg-[#8E7353]  px-2 rounded-xl">
+            <div className="card-body p-0 mb-5">
+
               <div className="tabs tabs-bordered">
-                <button className="tab tab-active gap-2">
-                  <Terminal className="w-4 h-4" />
+                <button className="tab tab-active gap-2 text-[#FFD580] text-lg">
+                  <Terminal className="w-4 h-4 text-[#FFD580]" />
                   Code Editor
                 </button>
               </div>
 
-              <div className="h-[600px] w-full">
+              {/* Code-editor */}
+              <div style={{ borderRadius: "10px", overflow: "hidden" }} className="h-[600px] w-full border-1 border-black hover:border-orange-300">
                 <Editor
                   height="100%"
                   language={selectedLanguage.toLowerCase()}
-                  theme="vs-dark"
+                  theme="vs-dark"                 
                   value={code}
                   onChange={(value) => setCode(value || "")}
                   options={{
@@ -324,7 +350,8 @@ const ProblemPageById = () => {
                 />
               </div>
 
-              <div className="p-4 border-t border-base-300 bg-base-200">
+              {/* Run and submit button */}
+              <div className="p-4 border-t border-base-300 bg-base-200 rounded-lg">
                 <div className="flex justify-between items-center">
                   <button
                     className={`btn btn-primary gap-2 ${
@@ -334,17 +361,20 @@ const ProblemPageById = () => {
                     disabled={isExecuting}
                   >
                     {!isExecuting && <Play className="w-4 h-4" />}
-                    Run Code
+                    Run Code                   
                   </button>
                   <button className="btn btn-success gap-2">
                     Submit Solution
                   </button>
                 </div>
               </div>
+              
             </div>
           </div>
+
         </div>
 
+        {/* Test-cases */}
         <div className="card bg-base-100 shadow-xl mt-6">
           <div className="card-body">
             {submission ? (
@@ -376,6 +406,7 @@ const ProblemPageById = () => {
             )}
           </div>
         </div>
+
       </div>
     </div>
   );

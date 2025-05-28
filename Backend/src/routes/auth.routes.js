@@ -24,7 +24,7 @@ authRoutes.post("/login", userLoginValidator(), validate, loginUser);
 authRoutes.get("/refreshToken", refreshAccessToken);
 authRoutes.post("/logout", isLoggedIn, logoutUser);
 authRoutes.get("/profile", isLoggedIn, getUserProfile);
-authRoutes.post("/forgot-password",isLoggedIn,forgotPasswordRequest)
+authRoutes.post("/forgot-password",forgotPasswordRequest)
 authRoutes.get("/forgot-password-verification/:forgotPasswordToken",verifyYourEmailForChangePassword)
 authRoutes.post("/changed-password/:forgotPasswordToken",changePasswordValidator(), validate, changePassword)
 

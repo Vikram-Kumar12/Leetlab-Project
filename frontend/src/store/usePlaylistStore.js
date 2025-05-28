@@ -74,7 +74,7 @@ export const usePlaylistStore = create((set, get) => ({
       }
     } catch (error) {
       console.error("Error adding problem to playlist:", error);
-      toast.error("Failed to add problem to playlist");
+      toast.error("Same problem is not allowed to add in same playlist");
     } finally {
       set({ isLoading: false });
     }
