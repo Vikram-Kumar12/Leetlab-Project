@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {z} from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
   Plus,
   Trash2,
@@ -13,10 +13,10 @@ import {
   Download,
 } from "lucide-react";
 import Editor from "@monaco-editor/react";
-import { useState } from 'react';
-import {axiosInstance} from "../../lib/axios.js"
+import { useState } from "react";
+import { axiosInstance } from "../../lib/axios.js";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const problemSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -62,7 +62,6 @@ const problemSchema = z.object({
     JAVA: z.string().min(1, "Java solution is required"),
   }),
 });
-
 
 const sampledpData = {
   title: "Climbing Stairs",
@@ -512,13 +511,18 @@ public class Main {
 };
 
 const CreateProblemForm = () => {
-    const [sampleType , setSampleType] = useState("DP")
-    const navigation = useNavigate();
-    const {register , control , handleSubmit , reset , formState:{errors}} = useForm(
-        {
-            resolver:zodResolver(problemSchema),
-            defaultValues:{
-                 testcases: [{ input: "", output: "" }],
+  const [sampleType, setSampleType] = useState("DP");
+  const navigation = useNavigate();
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(problemSchema),
+    defaultValues: {
+      testcases: [{ input: "", output: "" }],
       tags: [""],
       examples: {
         JAVASCRIPT: { input: "", output: "", explanation: "" },
@@ -535,9 +539,8 @@ const CreateProblemForm = () => {
         PYTHON: "# Add your reference solution here",
         JAVA: "// Add your reference solution here",
       },
-            }
-        }
-    )
+    },
+  });
 
   const {
     fields: testCaseFields,
@@ -559,52 +562,53 @@ const CreateProblemForm = () => {
     name: "tags",
   });
 
-  const [isLoading , setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (value)=>{
+  const onSubmit = async (value) => {
     // console.log("Value :",value);
-    
-   try {
-    setIsLoading(true)
-    const res = await axiosInstance.post("/problems/create-problem" , value)
-    // console.log(res.data);
-    toast.success(res.data.message || "Problem Created successfully⚡");
-    navigation("/problem-section");
 
-   } catch (error) {
-    // console.log(error);
-    toast.error("Error creating problem")
-   }
-   finally{
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post("/problems/create-problem", value);
+      // console.log(res.data);
+      toast.success(res.data.message || "Problem Created successfully⚡");
+      navigation("/problem-section");
+    } catch (error) {
+      // console.log(error);
+      toast.error("Error creating problem");
+    } finally {
       setIsLoading(false);
-   }
-  }
+    }
+  };
 
-  const loadSampleData=()=>{
-    const sampleData = sampleType === "DP" ? sampledpData : sampleStringProblem
-  
-   replaceTags(sampleData.tags.map((tag) => tag));
+  const loadSampleData = () => {
+    const sampleData = sampleType === "DP" ? sampledpData : sampleStringProblem;
+
+    replaceTags(sampleData.tags.map((tag) => tag));
     replacetestcases(sampleData.testcases.map((tc) => tc));
 
-   // Reset the form with sample data
+    // Reset the form with sample data
     reset(sampleData);
-}
+  };
 
   return (
-    <div className='container mx-auto py-8 px-4 max-w-7xl bg-slate-900'>
-  <div className="card bg-base-100 shadow-xl">
+    <div className="container mx-auto py-8 px-4 max-w-7xl ">
+      <div className="card bg-base-100 shadow-xl">
+
         <div className="card-body p-6 md:p-8">
+
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 pb-4 border-b">
-            <h2 className="card-title text-2xl md:text-3xl flex items-center gap-3">
+
+            <h2 style={{fontFamily:"font4"}} className="card-title text-2xl md:text-3xl flex items-center gap-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600 ">
               <FileText className="w-6 h-6 md:w-8 md:h-8 text-primary" />
               Create Problem
             </h2>
 
-            <div className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0">
+            <div style={{fontFamily:"font4"}} className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0 ">
               <div className="join">
                 <button
                   type="button"
-                  className={`btn join-item ${
+                  className={`btn join-item text-[#FFD580] bg-slate-900 border-1 hover:border-zinc-300 mr-1 ${
                     sampleType === "DP" ? "btn-active" : ""
                   }`}
                   onClick={() => setSampleType("DP")}
@@ -613,7 +617,7 @@ const CreateProblemForm = () => {
                 </button>
                 <button
                   type="button"
-                  className={`btn join-item ${
+                  className={`btn join-item text-[#FFD580] bg-slate-900 border-1 hover:border-zinc-300 ${
                     sampleType === "string" ? "btn-active" : ""
                   }`}
                   onClick={() => setSampleType("string")}
@@ -630,14 +634,18 @@ const CreateProblemForm = () => {
                 Load Sample
               </button>
             </div>
+
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+
             {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="form-control md:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+
+              {/* title */}
+              <div className="form-control md:col-span-2 ">
                 <label className="label">
-                  <span className="label-text text-base md:text-lg font-semibold">
+                  <span style={{fontFamily:"font4"}} className="mb-1 label-text text-base md:text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
                     Title
                   </span>
                 </label>
@@ -656,14 +664,15 @@ const CreateProblemForm = () => {
                 )}
               </div>
 
+              {/* Description */}
               <div className="form-control md:col-span-2">
                 <label className="label">
-                  <span className="label-text text-base md:text-lg font-semibold">
+                  <span style={{fontFamily:"font4"}}  className="mb-1 label-text text-base md:text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
                     Description
                   </span>
                 </label>
                 <textarea
-                  className="textarea textarea-bordered min-h-32 w-full text-base md:text-lg p-4 resize-y"
+                  className="textarea textarea-bordered min-h-32 w-full text-base md:text-lg p-4 resize-y outline-none focus:outline-none focus:ring-0"
                   {...register("description")}
                   placeholder="Enter problem description"
                 />
@@ -676,19 +685,20 @@ const CreateProblemForm = () => {
                 )}
               </div>
 
+              {/* Defficulty */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text text-base md:text-lg font-semibold">
+                  <span style={{fontFamily:"font4"}} className="mb-1 label-text text-base md:text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
                     Difficulty
                   </span>
                 </label>
                 <select
-                  className="select select-bordered w-full text-base md:text-lg"
+                  className="select select-bordered w-full text-base md:text-lg outline-none focus:outline-none focus:ring-0"
                   {...register("difficulty")}
                 >
                   <option value="ESAY">ESAY</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HARD">Hard</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="HARD">HARD</option>
                 </select>
                 {errors.difficulty && (
                   <label className="label">
@@ -698,21 +708,22 @@ const CreateProblemForm = () => {
                   </label>
                 )}
               </div>
+
             </div>
 
             {/* Tags */}
-            <div className="card bg-base-200 p-4 md:p-6 shadow-md">
+            <div className="card bg-slate-900 p-4 md:p-6 shadow-md">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg md:text-xl font-semibold flex items-center gap-2">
-                  <BookOpen className="w-5 h-5" />
+                <h3 style={{fontFamily:"font4"}} className="text-lg md:text-xl font-semibold flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
+                  <BookOpen className="w-5 h-5 text-[#FFD580]" />
                   Tags
                 </h3>
-                <button
+                <button style={{fontFamily:"font4"}}
                   type="button"
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-primary btn-sm "
                   onClick={() => appendTag("")}
                 >
-                  <Plus className="w-4 h-4 mr-1" /> Add Tag
+                  <Plus  className="w-4 h-4 mr-1"  /> Add Tag
                 </button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -745,13 +756,14 @@ const CreateProblemForm = () => {
             </div>
 
             {/* Test Cases */}
-            <div className="card bg-base-200 p-4 md:p-6 shadow-md">
+            <div className="card bg-slate-900 p-4 md:p-6 shadow-md">
+
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg md:text-xl font-semibold flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5" />
+                <h3 style={{fontFamily:"font4"}} className="text-lg md:text-xl font-semibold flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
+                  <CheckCircle2 className="w-5 h-5 text-[#FFD580]" />
                   Test Cases
                 </h3>
-                <button
+                <button style={{fontFamily:"font4"}}
                   type="button"
                   className="btn btn-primary btn-sm"
                   onClick={() => appendTestCase({ input: "", output: "" })}
@@ -759,32 +771,38 @@ const CreateProblemForm = () => {
                   <Plus className="w-4 h-4 mr-1" /> Add Test Case
                 </button>
               </div>
-              <div className="space-y-6">
+
+              <div className="space-y-6 ">
                 {testCaseFields.map((field, index) => (
                   <div key={field.id} className="card bg-base-100 shadow-md">
-                    <div className="card-body p-4 md:p-6">
+                    <div className="card-body p-4 md:p-6 bg-slate-800 rounded-md">
+
+                      {/* hading */}
                       <div className="flex justify-between items-center mb-4">
-                        <h4 className="text-base md:text-lg font-semibold">
+                        <h4 style={{fontFamily:"font4"}} className="text-base md:text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
                           Test Case #{index + 1}
                         </h4>
-                        <button
+                        <button style={{fontFamily:"font4"}}
                           type="button"
-                          className="btn btn-ghost btn-sm text-error"
+                          className="btn btn-ghost btn-sm text-error cursor-pointer"
                           onClick={() => removeTestCase(index)}
                           disabled={testCaseFields.length === 1}
                         >
                           <Trash2 className="w-4 h-4 mr-1" /> Remove
                         </button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 ">
+
+                        {/* input */}
                         <div className="form-control">
                           <label className="label">
-                            <span className="label-text font-medium">
+                            <span style={{fontFamily:"font4"}} className="label-text font-medium text-blue-500">
                               Input
                             </span>
                           </label>
                           <textarea
-                            className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"
+                            className="textarea textarea-bordered min-h-24 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                             {...register(`testcases.${index}.input`)}
                             placeholder="Enter test case input"
                           />
@@ -796,14 +814,16 @@ const CreateProblemForm = () => {
                             </label>
                           )}
                         </div>
+
+                        {/* expected output */}
                         <div className="form-control">
                           <label className="label">
-                            <span className="label-text font-medium">
+                            <span style={{fontFamily:"font4"}} className="label-text font-medium text-blue-500">
                               Expected Output
                             </span>
                           </label>
                           <textarea
-                            className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"
+                            className="textarea textarea-bordered min-h-24 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                             {...register(`testcases.${index}.output`)}
                             placeholder="Enter expected output"
                           />
@@ -815,7 +835,9 @@ const CreateProblemForm = () => {
                             </label>
                           )}
                         </div>
+
                       </div>
+
                     </div>
                   </div>
                 ))}
@@ -834,18 +856,19 @@ const CreateProblemForm = () => {
               {["JAVASCRIPT", "PYTHON", "JAVA"].map((language) => (
                 <div
                   key={language}
-                  className="card bg-base-200 p-4 md:p-6 shadow-md"
+                  className="card  p-4 md:p-6 shadow-md bg-slate-900"
                 >
-                  <h3 className="text-lg md:text-xl font-semibold mb-6 flex items-center gap-2">
-                    <Code2 className="w-5 h-5" />
+                  <h3 style={{fontFamily:"font4"}} className="text-lg md:text-xl font-semibold mb-6 flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-600">
+                    <Code2 className="w-5 h-5 text-[#FFD580]" />
                     {language}
                   </h3>
 
                   <div className="space-y-6">
+
                     {/* Starter Code */}
-                    <div className="card bg-base-100 shadow-md">
+                    <div className="card bg-slate-800 shadow-md">
                       <div className="card-body p-4 md:p-6">
-                        <h4 className="font-semibold text-base md:text-lg mb-4">
+                        <h4 style={{fontFamily:"font4"}} className=" text-base md:text-lg mb-4 text-[#FFD580]">
                           Starter Code Template
                         </h4>
                         <div className="border rounded-md overflow-hidden">
@@ -882,9 +905,9 @@ const CreateProblemForm = () => {
                     </div>
 
                     {/* Reference Solution */}
-                    <div className="card bg-base-100 shadow-md">
+                    <div className="card bg-slate-800 shadow-md">
                       <div className="card-body p-4 md:p-6">
-                        <h4 className="font-semibold text-base md:text-lg mb-4 flex items-center gap-2">
+                        <h4 style={{fontFamily:"font4"}} className="font-semibold text-base md:text-lg mb-4 flex items-center gap-2 text-[#FFD580]">
                           <CheckCircle2 className="w-5 h-5 text-success" />
                           Reference Solution
                         </h4>
@@ -922,20 +945,20 @@ const CreateProblemForm = () => {
                     </div>
 
                     {/* Examples */}
-                    <div className="card bg-base-100 shadow-md">
+                    <div className="card bg-slate-800 shadow-md">
                       <div className="card-body p-4 md:p-6">
-                        <h4 className="font-semibold text-base md:text-lg mb-4">
+                        <h4 style={{fontFamily:"font4"}} className="font-semibold text-base md:text-lg mb-4 text-[#FFD580]">
                           Example
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                           <div className="form-control">
                             <label className="label">
-                              <span className="label-text font-medium">
+                              <span style={{fontFamily:"font4"}} className="label-text font-medium text-blue-500">
                                 Input
                               </span>
                             </label>
                             <textarea
-                              className="textarea textarea-bordered min-h-20 w-full p-3 resize-y"
+                              className="textarea textarea-bordered min-h-20 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                               {...register(`examples.${language}.input`)}
                               placeholder="Example input"
                             />
@@ -949,12 +972,12 @@ const CreateProblemForm = () => {
                           </div>
                           <div className="form-control">
                             <label className="label">
-                              <span className="label-text font-medium">
+                              <span style={{fontFamily:"font4"}} className="label-text font-medium text-blue-500">
                                 Output
                               </span>
                             </label>
                             <textarea
-                              className="textarea textarea-bordered min-h-20 w-full p-3 resize-y"
+                              className="textarea textarea-bordered min-h-20 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                               {...register(`examples.${language}.output`)}
                               placeholder="Example output"
                             />
@@ -968,12 +991,12 @@ const CreateProblemForm = () => {
                           </div>
                           <div className="form-control md:col-span-2">
                             <label className="label">
-                              <span className="label-text font-medium">
+                              <span style={{fontFamily:"font4"}} className="label-text font-medium text-green-500">
                                 Explanation
                               </span>
                             </label>
                             <textarea
-                              className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"
+                              className="textarea textarea-bordered min-h-24 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                               {...register(`examples.${language}.explanation`)}
                               placeholder="Explain the example"
                             />
@@ -981,24 +1004,25 @@ const CreateProblemForm = () => {
                         </div>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Additional Information */}
-            <div className="card bg-base-200 p-4 md:p-6 shadow-md">
-              <h3 className="text-lg md:text-xl font-semibold mb-6 flex items-center gap-2">
+            <div className="card bg-slate-900 p-4 md:p-6 shadow-md">
+              <h3 style={{fontFamily:"font4"}} className="text-lg md:text-xl font-semibold mb-6 flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 to-red-600">
                 <Lightbulb className="w-5 h-5 text-warning" />
                 Additional Information
               </h3>
               <div className="space-y-6">
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Constraints</span>
+                    <span style={{fontFamily:"font4"}} className="mb-1 label-text font-medium text-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 to-red-600">Constraints</span>
                   </label>
                   <textarea
-                    className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"
+                    className="textarea textarea-bordered min-h-24 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                     {...register("constraints")}
                     placeholder="Enter problem constraints"
                   />
@@ -1012,24 +1036,24 @@ const CreateProblemForm = () => {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">
-                      Hints (Optional)
+                    <span style={{fontFamily:"font4"}} className="mb-1 label-text font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 to-red-600 text-lg">
+                      Hints <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-600 text-sm">(Optional)</span>
                     </span>
                   </label>
                   <textarea
-                    className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"
+                    className="textarea textarea-bordered min-h-24 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                     {...register("hints")}
                     placeholder="Enter hints for solving the problem"
                   />
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">
-                      Editorial (Optional)
+                    <span style={{fontFamily:"font4"}} className="mb-1 label-text font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-pink-400 to-red-600 text-lg">
+                      Editorial <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-600 text-sm">(Optional)</span>
                     </span>
                   </label>
                   <textarea
-                    className="textarea textarea-bordered min-h-32 w-full p-3 resize-y"
+                    className="textarea textarea-bordered min-h-32 w-full p-3 resize-y outline-none focus:outline-none focus:ring-0"
                     {...register("editorial")}
                     placeholder="Enter problem editorial/solution explanation"
                   />
@@ -1037,23 +1061,26 @@ const CreateProblemForm = () => {
               </div>
             </div>
 
-            <div className="card-actions justify-end pt-4 border-t">
-              <button type="submit" className="btn btn-primary btn-lg gap-2">
+            <div className="card-actions justify-end pt-4 border-t border-[#FFD580]">
+              <button style={{fontFamily:"font4"}} type="submit" className="btn btn-primary btn-lg gap-2 text-[#FFD580]">
                 {isLoading ? (
-                  <span className="loading loading-spinner text-white"></span>
+                  <span className="loading loading-spinner text-[#FFD580]"></span>
                 ) : (
                   <>
-                    <CheckCircle2 className="w-5 h-5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#FFD580]" />
                     Create Problem
                   </>
                 )}
               </button>
             </div>
+
           </form>
+
         </div>
+        
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateProblemForm
+export default CreateProblemForm;

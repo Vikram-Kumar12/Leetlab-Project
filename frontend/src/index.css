@@ -1,26 +1,25 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
 @font-face {
   /* LeetLab name */
-  font-family: 'font1';
-  src: url('../public/assets/font1.otf') format('truetype'); 
-  font-weight:200;
+  font-family: "font1";
+  src: url("../public/assets/font1.otf") format("truetype");
+  font-weight: 200;
   font-style: normal;
 }
 @font-face {
   /* All text */
-  font-family: 'font3';
-  src: url('../public/assets/font3.ttf') format('truetype'); 
-  font-weight:700;
+  font-family: "font3";
+  src: url("../public/assets/font3.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
 }
 @font-face {
   /* used in handing */
-  font-family: 'font4';
-  src: url('../public/assets/font4.woff') format('truetype'); 
-  font-weight:100;
+  font-family: "font4";
+  src: url("../public/assets/font4.woff") format("truetype");
+  font-weight: 100;
   font-style: normal;
 }
 
@@ -34,27 +33,27 @@ input:focus {
   outline: none;
 }
 
-.navbar-section{
-  background-image: url('/assets/bg1.svg');
+.navbar-section {
+  background-image: url("/assets/bg1.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 .hero-section {
-  background-image: url('/assets/bg1.svg');
+  background-image: url("/assets/bg1.svg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 .explore-section {
-  background-image: url('/assets/bg2.svg');
+  background-image: url("/assets/bg2.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 .product-section {
-  background-image: url('/assets/bg2.svg');
-  background-repeat:no-repeat;
+  background-image: url("/assets/bg2.svg");
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
@@ -64,12 +63,11 @@ input:focus {
   background-position: center;
 }
 .login-section {
-  background-image: url('/assets/bg2.svg');
+  background-image: url("/assets/bg2.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
-
 
 /* Hide background image below lg (1024px) */
 @media (max-width: 1023px) {
@@ -93,22 +91,21 @@ input:focus {
 /* Show background image on lg and above */
 @media (min-width: 1024px) {
   .navbar-section {
-    background-image: url('/assets/bg1.svg');
+    background-image: url("/assets/bg1.svg");
   }
   .hero-section {
-    background-image: url('/assets/bg1.svg');
+    background-image: url("/assets/bg1.svg");
   }
   .explore-section {
-    background-image: url('/assets/bg2.svg');
+    background-image: url("/assets/bg2.svg");
   }
   .product-section {
-    background-image: url('/assets/bg2.svg');
+    background-image: url("/assets/bg2.svg");
   }
   .developer-section {
-    background-image: url('/assets/bg2.svg');
+    background-image: url("/assets/bg2.svg");
   }
 }
-
 
 @keyframes marquee {
   0% {
@@ -124,54 +121,57 @@ input:focus {
 }
 
 @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+  0%,
+  100% {
+    opacity: 1;
   }
-  
-  .animate-blink {
-    animation: blink 1s infinite;
+  50% {
+    opacity: 0;
   }
-  
-  .animate-pulse {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  .delay-100 {
-    animation-delay: 1s;
-  }
-  
-  .delay-200 {
-    animation-delay: 2s;
-  }
-  
-  .delay-300 {
-    animation-delay: 3s;
-  }
-  
-  .delay-500 {
-    animation-delay: 5s;
-  }
-  
-  .delay-700 {
-    animation-delay: 7s;
-  }
-  
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 0.3;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-  
-  
+}
 
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.delay-100 {
+  animation-delay: 1s;
+}
+
+.delay-200 {
+  animation-delay: 2s;
+}
+
+.delay-300 {
+  animation-delay: 3s;
+}
+
+.delay-500 {
+  animation-delay: 5s;
+}
+
+.delay-700 {
+  animation-delay: 7s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+
+html, body, #root {
+  position: relative;
+  overflow-x: hidden;
+}

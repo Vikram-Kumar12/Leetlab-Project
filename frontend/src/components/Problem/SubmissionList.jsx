@@ -63,7 +63,7 @@ const SubmissionsList = ({ submissions, isLoading }) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 ">
       {submissions.map((submission) => {
         const avgMemory = calculateAverageMemory(submission.memory);
         const avgTime = calculateAverageTime(submission.time);
@@ -71,20 +71,21 @@ const SubmissionsList = ({ submissions, isLoading }) => {
         return (
           <div
             key={submission.id}
-            className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow rounded-lg"
+            className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow rounded-lg mt-5"
           >
-            <div className="card-body p-4">
-              <div className="flex items-center justify-between">
+            <div className="px-2 py-7">
+              <div className="flex items-center justify-between ">
+                
                 {/* Left Section: Status and Language */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2  py-3">
                   {submission.status === "Accepted" ? (
-                    <div className="flex items-center gap-2 text-success">
-                      <CheckCircle2 className="w-6 h-6" />
+                    <div className="flex items-center text-success">
+                      <CheckCircle2 className="w-4 h-6" />
                       <span className="font-semibold">Accepted</span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 text-error">
-                      <XCircle className="w-6 h-6" />
+                    <div className="flex items-center text-error">
+                      <XCircle className="w-4 h-6" />
                       <span className="font-semibold">{submission.status}</span>
                     </div>
                   )}
@@ -92,24 +93,26 @@ const SubmissionsList = ({ submissions, isLoading }) => {
                 </div>
 
                 {/* Right Section: Runtime, Memory, and Date */}
-                <div className="flex items-center gap-4 text-base-content/70">
+                <div className="flex items-center  gap-4 text-base-content/70 ">
                   <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
+                    <Clock className="w-4 h-4 text-[#FFD580]" />
                     <span>{avgTime.toFixed(3)} s</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Memory className="w-4 h-4" />
+                    <Memory className="w-4 h-4 text-[#FFD580]" />
                     <span>{avgMemory.toFixed(0)} KB</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
+                  <div className="flex items-center gap-1 ">
+                    <Calendar className="w-4 h-4 text-[#FFD580]" />
                     <span>
                       {new Date(submission.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
+
               </div>
             </div>
+            
           </div>
         );
       })}

@@ -79,13 +79,20 @@ const ProblemsTable = ({ problems }) => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-10 bg-slate-900">
+
+    <div className="w-full max-w-7xl mx-auto mt-20 mb-10">
       {/* Header with Create Playlist Button */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Problems</h2>
+        <h2
+          style={{ fontFamily: "font4" }}
+          className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-400 hover:scale-105 duration-300"
+        >
+          Problems
+        </h2>
         <button
-          className="btn btn-primary gap-2"
-            onClick={() => setIsCreateModalOpen(true)}
+          style={{ fontFamily: "font4" }}
+          className="btn btn-primary gap-2 text-[#FFD580] hover:text-white hover:scale-105 duration-300"
+          onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="w-4 h-4" />
           Create Playlist
@@ -131,42 +138,42 @@ const ProblemsTable = ({ problems }) => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl shadow-md">
-        <table className="table table-zebra table-lg bg-base-200 text-base-content">
-          <thead className="bg-base-300">
-            <tr>
-              <th>Solved</th>
-              <th>Title</th>
-              <th>Tags</th>
-              <th>Difficulty</th>
-              <th>Actions</th>
+      <div className="overflow-x-auto rounded-xl shadow-md bg-slate-800">
+        <table className="table  table-lg  text-base-content border-1 border-zinc-600">
+          <thead className="">
+            <tr style={{ fontFamily: "font4" }} className="text-[#FFD580]">
+              <th className="border-b-1 border-zinc-600">Solved</th>
+              <th className="border-b-1 border-zinc-600">Title</th>
+              <th className="border-b-1 border-zinc-600">Tags</th>
+              <th className="border-b-1 border-zinc-600">Difficulty</th>
+              <th className="border-b-1 border-zinc-600">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {paginatedProblems.length > 0 ? (
               paginatedProblems.map((problem) => {
                 const isSolved = problem.solvedBy.some(
                   (user) => user.userId === authUser?.id
                 );
                 return (
-                  <tr key={problem.id}>
-                    <td>
+                  <tr key={problem.id} className="">
+                    <td className="border-b-1 border-zinc-600">
                       <input
                         type="checkbox"
                         checked={isSolved}
                         readOnly
-                        className="checkbox checkbox-sm"
+                        className="checkbox checkbox-sm text-green-500"
                       />
                     </td>
-                    <td>
+                    <td className="border-b-1 border-zinc-600">
                       <Link
                         to={`/problem/${problem.id}`}
-                        className="font-semibold hover:underline"
+                        className="font-semibold hover:underline  "
                       >
                         {problem.title}
                       </Link>
                     </td>
-                    <td>
+                    <td className="border-b-1 border-zinc-600">
                       <div className="flex flex-wrap gap-1">
                         {(problem.tags || []).map((tag, idx) => (
                           <span
@@ -178,7 +185,7 @@ const ProblemsTable = ({ problems }) => {
                         ))}
                       </div>
                     </td>
-                    <td>
+                    <td className="border-b-1 border-zinc-600">
                       <span
                         className={`badge font-semibold text-xs text-white ${
                           problem.difficulty === "ESAY"
@@ -191,7 +198,7 @@ const ProblemsTable = ({ problems }) => {
                         {problem.difficulty}
                       </span>
                     </td>
-                    <td>
+                    <td className="border-b-1 border-zinc-600">
                       <div className="flex flex-col md:flex-row gap-2 items-start md:items-center">
                         {authUser?.role === "ADMIN" && (
                           <div className="flex gap-2">
@@ -269,6 +276,7 @@ const ProblemsTable = ({ problems }) => {
         problemId={selectedProblemId}
       />
     </div>
+    
   );
 };
 

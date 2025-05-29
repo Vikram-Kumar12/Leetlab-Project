@@ -13,6 +13,7 @@ import ProblemHomePage from "../components/Problem/ProblemHomePage";
 import AdminRoute from "../components/Layout/AdminRoute";
 import AddProblem from "../components/Problem/AddProblem";
 import ProblemPageById from "../components/Problem/ProblemPageById";
+import ProfilePage from "../components/Profile/ProfilePage";
 
 const Routers = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -76,6 +77,14 @@ const Routers = () => {
           />
         </Route>
 
+        <Route path="/profile" element={<ProfilePage />}>
+          <Route
+            index
+            element={
+              authUser ? <ProfilePage /> : <Navigate to={"/signin"} />
+            }
+          />
+        </Route>
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/change-password" element={<ChangePasswordPage />} />
       </Routes>
