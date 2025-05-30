@@ -15,6 +15,7 @@ import CreatePlaylistModal from "./CreatePlaylistModal.jsx";
 import { usePlaylistStore } from "../../store/usePlaylistStore.js";
 
 const ProblemsTable = ({ problems }) => {
+
   const { authUser } = useAuthStore();
   const { isDeletingProblem, onDeleteProblem } = useActions();
   const { createPlaylist } = usePlaylistStore();
@@ -81,6 +82,7 @@ const ProblemsTable = ({ problems }) => {
   return (
 
     <div className="w-full max-w-7xl mx-auto mt-20 mb-10">
+
       {/* Header with Create Playlist Button */}
       <div className="flex justify-between items-center mb-6">
         <h2
@@ -275,6 +277,7 @@ const ProblemsTable = ({ problems }) => {
         onClose={() => setIsAddToPlaylistModalOpen(false)}
         problemId={selectedProblemId}
       />
+      
     </div>
     
   );

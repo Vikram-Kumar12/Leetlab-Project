@@ -42,6 +42,7 @@ export const useAuthStore = create((set) => ({
         res.data.message || "Registered! Please verify your email."
       );
     } catch (error) {
+      // console.log("errrr2 :",error.response?.data?.message);
       toast.error(error.response?.data?.message || "Signup failed");
     } finally {
       set({ isSigninUp: false });
@@ -120,5 +121,4 @@ export const useAuthStore = create((set) => ({
       );
     }
   },
-  
 }));

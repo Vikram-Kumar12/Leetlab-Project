@@ -22,6 +22,13 @@ export const registerUser = asyncHandler(async (req, res) => {
     return res.status(400).json(new ApiError(400, "All fileds are required!"));
   }
 
+  // const userName = await db.user.findUnique({
+  //   where: { username },
+  // });
+  // if (userName) {
+  //   return res.status(409).json(new ApiError(409, "Username Already Exists"));
+  // }
+
   const existingUser = await db.user.findUnique({
     where: { email },
   });
@@ -407,7 +414,7 @@ export const forgotPasswordRequest = asyncHandler(async (req, res) => {
       "ForgotPassword verification email sent successfully in your e-mail address!",
       {
         user: {
-          forgotPasswordToken:unHashedToken,
+          forgotPasswordToken: unHashedToken,
           id: user.id,
           firstname: user.firstname,
           lastname: user.lastname,
@@ -419,10 +426,6 @@ export const forgotPasswordRequest = asyncHandler(async (req, res) => {
       },
     ),
   );
-
-
-
-
 });
 
 export const verifyYourEmailForChangePassword = asyncHandler(
@@ -472,13 +475,13 @@ export const verifyYourEmailForChangePassword = asyncHandler(
         forgotPasswordEmailisVerified: true,
       },
     });
-    res.redirect(`http://localhost:5173/change-password?token=${forgotPasswordToken}`);
-
+    res.redirect(
+      `http://localhost:5173/change-password?token=${forgotPasswordToken}`,
+    );
   },
 );
 
 export const changePassword = asyncHandler(async (req, res) => {
-
   const { newPassword, confirmPassword } = req.body;
 
   if (!newPassword || !confirmPassword) {
@@ -516,7 +519,7 @@ export const changePassword = asyncHandler(async (req, res) => {
       .status(401)
       .json(new ApiResponse(401, "Invalid or expired token"));
   }
-  
+
   if (!user.forgotPasswordEmailisVerified) {
     return res
       .status(403)
@@ -534,6 +537,7 @@ export const changePassword = asyncHandler(async (req, res) => {
     },
   });
 
-  return res.status(200).json(
-  new ApiResponse(200, "Password changed successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Password changed successfully"));
 });

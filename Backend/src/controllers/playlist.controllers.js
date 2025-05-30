@@ -84,8 +84,8 @@ export const getPlayListDetails = asyncHandler(async (req, res) => {
 export const addProblemToPlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
   let { problemIds } = req.body;
-//   console.log(req.params);
-//   console.log(req.body);
+  //   console.log(req.params);
+  //   console.log(req.body);
 
   if (typeof problemIds === "string") {
     problemIds = [problemIds]; // Wrap in array
@@ -101,7 +101,7 @@ export const addProblemToPlaylist = asyncHandler(async (req, res) => {
   // create records for each problems in the playlist
   const problemsInPlaylist = await db.problemInPlaylist.createMany({
     data: problemIds.map((problemId) => ({
-        // schema se match karke karna hai nhi to bar bar error aayega : (Argument `playListId` is missing.) 
+      // schema se match karke karna hai nhi to bar bar error aayega : (Argument `playListId` is missing.)
       playListId: playlistId,
       problemId,
     })),
@@ -136,32 +136,36 @@ export const deletePlaylist = asyncHandler(async (req, res) => {
 
 export const removeProblemFromPlaylist = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
-  let { problemIds } = req.body;
-
-//   console.log(req.params);
-//   console.log(req.body);
+  const { problemIds } = req.body;
+  // console.log("playlistid backend :",playlistId);
+  // console.log("problemIds backend :",problemIds);
 
   if (typeof problemIds === "string") {
     problemIds = [problemIds]; // Wrap in array
   }
-  if (!Array.isArray(problemIds) || problemIds.length === 0) {
+  if (!problemIds || !Array.isArray(problemIds)) {
     return res
       .status(400)
-      .json(new ApiError(400, "Invalid or missing problemsId"));
+      .json({ success: false, message: "Invalid problem IDs" });
   }
+  // console.log("🧹 Checking if record exists before deletion");
+  // const existing = await db.problemInPlaylist.findMany({
+  //   where: {
+  //     playListId: playlistId,
+  //     problemId: { in: problemIds },
+  //   },
+  // });
+  // console.log("🧐 Found records:", existing.length);
+  // console.log(existing);
 
-  const deletedProblem = await db.problemInPlaylist.deleteMany({
+  const deleted = await db.problemInPlaylist.deleteMany({
     where: {
-      playListId:playlistId,
-      problemId: {
-        in: problemIds,
-      },
+      playListId: playlistId, // ✅ this now matches your schema
+      problemId: { in: problemIds },
     },
   });
-
+  // console.log("✅ Deleted count:", deleted.count);
   res
-    .status(204)
-    .json(
-      new ApiResponse(204, "Problem deleted successfully!", deletedProblem),
-    );
+    .status(200)
+    .json({ success: true, message: "Problems removed from playlist" });
 });

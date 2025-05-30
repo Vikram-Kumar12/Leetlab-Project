@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Button from "../ReUseAbleCode/Button";
 import RightSidePage from "./RightSidePage";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const SideNavbar = () => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const {authUser} = useAuthStore();
+  // console.log("Auth details1 :",authUser);
+  // console.log("Auth details2 :",authUser?.firstname);
+  
   const handleEditClick = () => {
     alert("This feature is not completed yet!");
   };
@@ -57,6 +61,7 @@ const SideNavbar = () => {
           whileHover={{ scale: 1.05 }}
         >
           <img
+            // src={authUser?.inage}
             src="https://images.unsplash.com/photo-1610088441520-4352457e7095?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Profile"
             className="w-full h-full object-cover"
@@ -72,7 +77,7 @@ const SideNavbar = () => {
           transition={{ delay: 0.2 }}
         >
           <h1 className="text-lg md:text-2xl font-bold break-words bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-red-400 text-center md:text-start">
-            Johs Does
+            {authUser?.firstname} {authUser?.lastname}
           </h1>
         </motion.div>
 
@@ -84,7 +89,7 @@ const SideNavbar = () => {
           transition={{ delay: 0.4 }}
         >
           <p className="text-sm text-gray-300 text-center md:text-start mb-2">
-            johndoe
+            {authUser?.username}
           </p>
         </motion.div>
 
@@ -108,7 +113,7 @@ const SideNavbar = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <p>john.doe@example.com</p>
+          <p>{authUser?.email}</p>
         </motion.div>
 
         {/* Edit Button */}
@@ -140,6 +145,7 @@ const SideNavbar = () => {
           <RightSidePage/>
         </motion.div>
       </div>
+      
     </div>
   );
 };

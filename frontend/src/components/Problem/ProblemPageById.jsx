@@ -287,7 +287,7 @@ const ProblemPageById = () => {
         <div className="w-full grid grid-cols-1 lg:grid-cols-[1.5fr_2.5fr] gap-1 ">
 
           {/* All information like, discription, example, etc */}
-          <div className="shadow-xl bg-slate-900 rounded-xl h-fit ">
+          <div className="shadow-xl bg-slate-900 rounded-xl  ">
             <div className="card-body p-0 mb-10">
               {/* icon :  description, submission, discussion, hints*/}
               <div className="tabs tabs-bordered">

@@ -47,12 +47,8 @@ export const useProblemStore = create((set) => ({
   getSolvedProblemByUser: async () => {
     try {
       const res = await axiosInstance.get("/problems/get-solved-problems");
-      // console.log("Get solved problem by user data :", res.data.solvedProblems);
-
-      set({ solvedProblems: res.data.solvedProblems });
-      toast.success(
-        res.data.message || "Get solved problems by user successfully!"
-      );
+      // console.log("Get solved problem by user data :", res.data.data);
+      set({ solvedProblems: res.data.data });
     } catch (error) {
       // console.log("Get solved problems by user time error :", error);
       toast.error(

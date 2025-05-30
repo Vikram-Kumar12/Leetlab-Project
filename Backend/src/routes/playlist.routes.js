@@ -9,6 +9,6 @@ playlistRoutes.get("/",isLoggedIn,getAllPlayListDetails)
 playlistRoutes.get("/:playlistId",isLoggedIn,getPlayListDetails)
 playlistRoutes.post("/add-problem/:playlistId",isLoggedIn,addProblemToPlaylist)
 playlistRoutes.delete("/delete-playlist/:playlistId",isLoggedIn,deletePlaylist)
-playlistRoutes.delete("/remove-problem/:playlistId" , isLoggedIn , removeProblemFromPlaylist)
+playlistRoutes.post("/remove-problem/:playlistId" , isLoggedIn , removeProblemFromPlaylist)
 
 export default playlistRoutes;
