@@ -23,6 +23,7 @@ import { useExecutionStore } from "../../store/useExecutionStore.js";
 import { useSubmissionStore } from "../../store/useSubmissionStore.js";
 import Submission from "./Submission.jsx";
 import SubmissionsList from "./SubmissionList.jsx";
+import RightSidePage from "../Profile/RightSidePage.jsx";
 
 const ProblemPageById = () => {
   const { id } = useParams();
@@ -35,7 +36,10 @@ const ProblemPageById = () => {
     getSubmissionCountForProblem,
     submissionCount,
   } = useSubmissionStore();
-
+  // console.log("getSubmissionForProblem :",getSubmissionForProblem);
+  // console.log("getSubmissionCountForProblem :",getSubmissionCountForProblem);
+  // console.log("submissions :",submissions);
+  
   const [code, setCode] = useState("");
   const [activeTab, setActiveTab] = useState("description");
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
@@ -208,10 +212,10 @@ const ProblemPageById = () => {
         return null;
     }
   };
-
   return (
 
     <div className="w-full max-w-7xl mx-auto py-5 px-1 ">
+
       {/* Navbar */}
       <nav className="navbar shadow-lg px-4 py-3 bg-slate-900 flex flex-wrap items-start gap-4 transition-all duration-300 ease-in-out rounded-md">
         <div className="flex-1 min-w-[280px]">
@@ -447,6 +451,13 @@ const ProblemPageById = () => {
         </div>
       </div>
 
+
+      {/* passe submission data to profile */}
+      {/* <div className="hidden">
+        <RightSidePage
+        submissions={submissions}
+        />
+      </div> */}
     </div>
     
   );
