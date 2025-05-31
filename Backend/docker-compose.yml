@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres
+    container_name: leetlab-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vikramkumar
+      POSTGRES_PASSWORD: vikramkumar0120
+      POSTGRES_DB: leetlabdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - leet
+
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: leetlab-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - leet
+
+volumes:
+  pgdata:
+
+networks:
+  leet:
+    external: true
